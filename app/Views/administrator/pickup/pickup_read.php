@@ -1,18 +1,13 @@
 <?php
 $this->extend($Template->container);
 $this->section('content'); ?>
-<div class="">
-    <div class="page-title">
-        <div class="title_left">
-            <h3><?php echo $Page->title; ?></h3>
-        </div>
-    </div>
+<div class="col-12">
     <div class="clearfix"></div>
 
     <?php if (session()->getFlashdata('ci_flash_message') != NULL) : ?>
-    <div class="alert text-center mb-1 mt-0 <?php echo session()->getFlashdata('ci_flash_message_type') ?>" role="alert">
-        <small><?php echo session()->getFlashdata('ci_flash_message') ?></small>
-    </div>
+        <div class="alert text-center mb-1 mt-0 <?php echo session()->getFlashdata('ci_flash_message_type') ?>" role="alert">
+            <small><?php echo session()->getFlashdata('ci_flash_message') ?></small>
+        </div>
     <?php endif; ?>
 
     <div class="row">
@@ -22,14 +17,21 @@ $this->section('content'); ?>
                     <table class="table table-light table-striped">
                         <tbody>
                             <tr>
-                            <th width="15%">id_olshop</th><td>: <?php echo ($data->id_olshop); ?></td>
-                        </tr>
+                                <th width="15%">ID Olshop</th>
+                                <td>: <?php echo ($data->id_olshop); ?></td>
+                            </tr>
                             <tr>
-                            <th width="15%">jumlah_barang</th><td>: <?php echo ($data->jumlah_barang); ?></td>
-                        </tr>
+                                <th width="15%">Nama Olshop</th>
+                                <td>: <?php echo ($data->nama_olshop); ?></td>
+                            </tr>
                             <tr>
-                            <th width="15%">kurir</th><td>: <?php echo ($data->kurir); ?></td>
-                        </tr>
+                                <th width="15%">Jumlah Barang</th>
+                                <td>: <?php echo ($data->jumlah_barang); ?></td>
+                            </tr>
+                            <tr>
+                                <th width="15%">kurir</th>
+                                <td>: <?php echo ($data->nama_kurir . "(" . $data->kurir . ")"); ?></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

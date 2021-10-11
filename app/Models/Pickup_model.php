@@ -16,7 +16,7 @@ class Pickup_model extends Model
     //To help protect against Mass Assignment Attacks, the Model class requires 
     //that you list all of the field names that can be changed during inserts and updates
     // https://codeigniter4.github.io/userguide/models/model.html#protecting-fields
-    protected $allowedFields = ['id', 'id_olshop', 'jumlah_barang', 'kurir'];
+    protected $allowedFields = ['id', 'id_olshop', 'jumlah_barang', 'kurir', 'status'];
 
     protected $useAutoIncrement = false;
 
@@ -57,7 +57,11 @@ class Pickup_model extends Model
      */
     public function getById(mixed $id) : mixed
     {
-        return $this->where($this->primaryKey, $id)->sort()->first();
+        $this
+            ->select("pickup.*, olshop.nama AS nama_olshop, kurir.username, kurir.nama AS nama_kurir")
+            ->join("kurir","kurir.username=pickup.kurir", "LEFT")
+            ->join("olshop","pickup.id_olshop=olshop.id", "LEFT");
+        return $this->where($this->table.".".$this->primaryKey, $id)->sort()->first();
     }
 
     /**
@@ -119,6 +123,10 @@ class Pickup_model extends Model
      */
     public function getData(string|null $keyword = null) : object
     {
+        $this
+            ->select("pickup.*, olshop.nama AS nama_olshop, kurir.username, kurir.nama AS nama_kurir")
+            ->join("kurir","kurir.username=pickup.kurir", "LEFT")
+            ->join("olshop","pickup.id_olshop=olshop.id", "LEFT");
         if ($keyword == null) {
             return $this->sort();
         };

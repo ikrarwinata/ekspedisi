@@ -1,12 +1,7 @@
 <?php
 $this->extend($Template->container);
 $this->section('content'); ?>
-<div class="">
-    <div class="page-title">
-        <div class="title_left">
-            <h3><?php echo $Page->title; ?></h3>
-        </div>
-    </div>
+<div class="col-12">
     <div class="clearfix"></div>
 
     <?php if (session()->getFlashdata('ci_flash_message') != NULL) : ?>

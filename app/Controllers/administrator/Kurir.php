@@ -26,10 +26,9 @@ class Kurir extends BaseController
 
     // This event executed after constructor
     protected function onLoad(){
-        $this->getLocale();
         $this->PageData->parent = "administrator/Kurir";
         $this->PageData->header = (session()->has("level") ? NULL : ucfirst(str_replace("_", '', session("level"))) . " :: ") . 'Kurir';
-        
+        $this->PageData->access = ["administrator"];
         // check access level
         if (! $this->access_allowed()) {
             session()->setFlashdata("ci_login_flash_message", 'Login session outdate. Please re-Login !');
@@ -126,7 +125,7 @@ class Kurir extends BaseController
         $keyword = $this->request->getGetPost("keyword");
         $totalrecord = $this->model->getData($keyword)->countAllResults();        
 
-        $this->PageData->title = "administrator/Kurir";
+        $this->PageData->title = "Kurir";
         $this->PageData->subtitle = [
             $this->PageData->title => 'administrator/Kurir/index'
         ];

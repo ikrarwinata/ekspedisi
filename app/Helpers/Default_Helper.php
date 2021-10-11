@@ -84,6 +84,7 @@ if (!function_exists('inputSelect')) {
 		if ($value == $selectvalue) {
 			return $returnstring;
 		};
+		return NULL;
 	}
 }
 

@@ -16,7 +16,7 @@ class Master_model extends Model
     //To help protect against Mass Assignment Attacks, the Model class requires 
     //that you list all of the field names that can be changed during inserts and updates
     // https://codeigniter4.github.io/userguide/models/model.html#protecting-fields
-    protected $allowedFields = ['resi', 'id_olshop', 'foto', 'harga', 'status'];
+    protected $allowedFields = ['resi', 'id_pickup', 'id_olshop', 'foto', 'harga', 'kurir','status'];
 
     protected $useAutoIncrement = false;
 
@@ -57,6 +57,10 @@ class Master_model extends Model
      */
     public function getById(mixed $id) : mixed
     {
+        $this
+            ->select("master.*, olshop.nama AS nama_olshop, kurir.username, kurir.nama AS nama_kurir")
+            ->join("kurir","kurir.username=master.kurir", "LEFT")
+            ->join("olshop","master.id_olshop=olshop.id", "LEFT");
         return $this->where($this->primaryKey, $id)->sort()->first();
     }
 
@@ -119,6 +123,10 @@ class Master_model extends Model
      */
     public function getData(string|null $keyword = null) : object
     {
+        $this
+            ->select("master.*, olshop.nama AS nama_olshop, kurir.username, kurir.nama AS nama_kurir")
+            ->join("kurir","kurir.username=master.kurir", "LEFT")
+            ->join("olshop","master.id_olshop=olshop.id", "LEFT");
         if ($keyword == null) {
             return $this->sort();
         };
@@ -161,7 +169,8 @@ class Master_model extends Model
      * @access	public
      */
     public function truncate(){
-        $this->query('TRUNCATE '.$this->table);
+        $this->query('DELETE FROM deliver WHERE resi IN (SELECT resi FROM master)');
+        $this->query('TRUNCATE ' . $this->table);
     }
     
     //END_PHPSPREADSHEET_FUNCTION

@@ -26,10 +26,9 @@ class Olshop extends BaseController
 
     // This event executed after constructor
     protected function onLoad(){
-        $this->getLocale();
         $this->PageData->parent = "administrator/Olshop";
         $this->PageData->header = (session()->has("level") ? NULL : ucfirst(str_replace("_", '', session("level"))) . " :: ") . 'Olshop';
-        
+        $this->PageData->access = ["administrator"];
         // check access level
         if (! $this->access_allowed()) {
             session()->setFlashdata("ci_login_flash_message", 'Login session outdate. Please re-Login !');
@@ -126,7 +125,7 @@ class Olshop extends BaseController
         $keyword = $this->request->getGetPost("keyword");
         $totalrecord = $this->model->getData($keyword)->countAllResults();        
 
-        $this->PageData->title = "administrator/Olshop";
+        $this->PageData->title = "OlShop";
         $this->PageData->subtitle = [
             $this->PageData->title => 'administrator/Olshop/index'
         ];
@@ -150,34 +149,6 @@ class Olshop extends BaseController
         //endindex
     }
 
-    //READfunction
-    public function read($id=NULL)
-    {
-        $id = $id==NULL?$this->request->getPostGet("id"):base64_decode(urldecode($id));
-
-        $this->PageData->header .= ' :: Detail';
-        $this->PageData->title = "Olshop Detail";
-        $this->PageData->subtitle = [
-            'Olshop' => 'administrator/Olshop/index',
-            'Detail' => 'administrator/Olshop/read/' . urlencode(base64_encode($id)),
-        ];
-        $this->PageData->url = "administrator/Olshop/read/" . urlencode(base64_encode($id));
-        
-        $dataFind = $this->model->getById($id);
-
-        if($dataFind == FALSE || $id == NULL){
-            session()->setFlashdata('ci_flash_message', 'Sorry... This data is missing !');
-            session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
-            return redirect()->to(base_url($this->PageData->parent . '/index'));
-        }
-        $data = [
-            'data' => $this->model->getById($id), //getById on data
-            'Page' => $this->PageData,
-            'Template' => $this->Template
-        ];
-        return view('administrator/olshop/olshop_read', $data);
-    }
-
     //CREATEfunction
     public function create()
     {
@@ -191,7 +162,7 @@ class Olshop extends BaseController
 
         $data = [
             'data' => (object) [
-                'id' => set_value('id'),
+                'id' => set_value('id', generateId("OSP")),
                 'nama' => set_value('nama'),
                 'alamat' => set_value('alamat'),
             ],
@@ -210,7 +181,7 @@ class Olshop extends BaseController
         };
 
         $data = [
-            'id' => $this->request->getPost('id.'),
+            'id' => $this->request->getPost('id'),
             'nama' => $this->request->getPost('nama'),
             'alamat' => $this->request->getPost('alamat'),
         ];
@@ -338,7 +309,7 @@ class Olshop extends BaseController
         $res = FALSE;
 
         $this->validation->setRules([
-                'id' => 'trim|required|min_length[1]|max_length[11]',
+                'id' => 'trim',
                 'nama' => 'trim|required|max_length[250]',
                 'alamat' => 'trim|required|max_length[65535]',
         ]);

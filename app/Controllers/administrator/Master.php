@@ -8,6 +8,8 @@ namespace App\Controllers\administrator;
 
 use App\Models\Master_model;
 use App\Controllers\BaseController;
+use App\Models\Deliver_model;
+use App\Models\Pickup_model;
 
 class Master extends BaseController
 {
@@ -26,10 +28,9 @@ class Master extends BaseController
 
     // This event executed after constructor
     protected function onLoad(){
-        $this->getLocale();
         $this->PageData->parent = "administrator/Master";
         $this->PageData->header = (session()->has("level") ? NULL : ucfirst(str_replace("_", '', session("level"))) . " :: ") . 'Master';
-        
+        $this->PageData->access = ["administrator"];
         // check access level
         if (! $this->access_allowed()) {
             session()->setFlashdata("ci_login_flash_message", 'Login session outdate. Please re-Login !');
@@ -65,9 +66,11 @@ class Master extends BaseController
     }
 
     //INDEX
-    public function index()
+    public function index($status = 1)
     {
         //indexstart
+        $c = $this->model->select("COUNT(resi) AS c")->where("status", 0)->first()->c;
+        session()->set("verivikasi", $c);
         
         // Table sorting using GET var
         $sortcolumn = $this->request->getGetPost("sortcolumn");
@@ -124,14 +127,25 @@ class Master extends BaseController
         $page = $this->request->getGet("page");
         $page = $page<=0?1:$page;
         $keyword = $this->request->getGetPost("keyword");
+        $s = "status = 0";
+        if ($status == 1) {
+            $s = "status > 0";
+            $this->PageData->title = "Pickup Selesai";
+            $this->PageData->subtitle = [
+                $this->PageData->title => 'administrator/Master/index'
+            ];
+            $this->PageData->url = "administrator/Master/index";
+        }else {
+            $s = "status = 0";
+            $this->PageData->title = "Verivikasi Pickup";
+            $this->PageData->subtitle = [
+                $this->PageData->title => 'administrator/Master/verivikasi'
+            ];
+            $this->PageData->url = "administrator/Master/verivikasi";
+        }
+        $this->model->where($s, NULL, FALSE);
         $totalrecord = $this->model->getData($keyword)->countAllResults();        
-
-        $this->PageData->title = "administrator/Master";
-        $this->PageData->subtitle = [
-            $this->PageData->title => 'administrator/Master/index'
-        ];
-        $this->PageData->url = "administrator/Master/index";
-
+        $this->model->where($s, NULL, FALSE);
         $data = [
             'sortcolumn' => $sortcolumn,
             'sortorder' => $sortorder,
@@ -148,6 +162,12 @@ class Master extends BaseController
         ];
         return view('administrator/master/master_list', $data);
         //endindex
+    }
+
+    //INDEX
+    public function verivikasi()
+    {
+        return $this->index(0);
     }
 
     //READfunction
@@ -178,145 +198,6 @@ class Master extends BaseController
         return view('administrator/master/master_read', $data);
     }
 
-    //CREATEfunction
-    public function create()
-    {
-        $this->PageData->header .= ' :: ' . 'Create New Item';
-        $this->PageData->title = "Create Master";
-        $this->PageData->subtitle = [
-            'Master' => 'administrator/Master/index',
-            'Create New Item' => 'administrator/Master/create',
-        ];
-        $this->PageData->url = "administrator/Master/create";
-
-        $data = [
-            'data' => (object) [
-                'resi' => set_value('resi'),
-                'id_olshop' => set_value('id_olshop'),
-                'foto' => set_value('foto'),
-                'harga' => set_value('harga'),
-                'status' => set_value('status'),
-            ],
-            'action' => site_url($this->PageData->parent.'/createAction'),
-            'Page' => $this->PageData,
-            'Template' => $this->Template
-        ];
-        return view('administrator/master/master_form', $data);
-    }
-    
-    //ACTIONCREATEfunction
-    public function createAction()
-    {
-        if($this->isRequestValid() == FALSE){
-            return $this->create();
-        };
-
-        $data = [
-            'resi' => $this->request->getPost('resi'),
-            'id_olshop' => $this->request->getPost('id_olshop'),
-            'harga' => $this->request->getPost('harga.'),
-            'status' => $this->request->getPost('status'),
-        ];
-        
-        if ($foto = $this->request->getFile('foto')) {
-            if ($foto->isValid()) {
-                if (!$foto->hasMoved()) {
-                    $foto->move('uploads/master/', $foto->getRandomName());
-                }
-                $data['foto'] = 'uploads/master/'.$foto->getName();
-            }else{
-                session()->setFlashdata('ci_flash_message_foto', $foto->getErrorString() . ' (' . $foto->getError() . ')');
-                session()->setFlashdata('ci_flash_message_foto_type', ' text-danger ');
-                
-            };
-        };
-        
-        $this->model->insert($data);
-        session()->setFlashdata('ci_flash_message', 'Create item success !');
-        session()->setFlashdata('ci_flash_message_type', ' alert-success ');
-        return redirect()->to(base_url($this->PageData->parent . '/index'));
-    }
-    
-    //UPDATEfunction
-    public function update($id=NULL)
-    {
-        $id = $id == NULL ? $this->request->getPostGet("resi") : base64_decode(urldecode($id));
-
-        $this->PageData->header .= ' :: ' . 'Update Item';
-        $this->PageData->title = "Update Master";
-        $this->PageData->subtitle = [
-            'Master' => 'administrator/Master/index',
-            'Update Item' => 'administrator/Master/update/' . urlencode(base64_encode($id)),
-        ];
-        $this->PageData->url = "administrator/Master/update/" . urlencode(base64_encode($id));
-
-        $dataFind = $this->model->getById($id);
-
-        if($dataFind == FALSE || $id == NULL){
-            session()->setFlashdata('ci_flash_message', 'Sorry... This data is missing !');
-            session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
-            return redirect()->to(base_url($this->PageData->parent . '/index'));
-        }
-        $data = [
-            'data' => (object) [
-                'resi' => set_value('resi', $dataFind->resi),
-                'id_olshop' => set_value('id_olshop', $dataFind->id_olshop),
-                'foto' => set_value('foto', $dataFind->foto),
-                'harga' => set_value('harga', $dataFind->harga),
-                'status' => set_value('status', $dataFind->status),
-            ],
-            'action' => site_url($this->PageData->parent.'/updateAction'),
-            'Page' => $this->PageData,
-            'Template' => $this->Template
-        ];
-        return view('administrator/master/master_form', $data);
-    }
-    
-    //ACTIONUPDATEfunction
-    public function updateAction()
-    {
-        $id = $this->request->getPostGet('oldresi');
-        $dataFind = $this->model->getById($id);
-
-        if($dataFind == FALSE || $id == NULL){
-            session()->setFlashdata('ci_flash_message', 'Sorry... This data is missing !');
-            session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
-            return redirect()->to(base_url($this->PageData->parent . '/index'));
-        };
-
-        if($this->isRequestValid() == FALSE){
-            return $this->update(urlencode(base64_encode($id)));
-        };
-
-        $data = [
-            'resi' => $this->request->getPost('resi'),
-            'id_olshop' => $this->request->getPost('id_olshop'),
-            'harga' => $this->request->getPost('harga'),
-            'status' => $this->request->getPost('status'),
-        ];
-        
-        if ($foto = $this->request->getFile('foto')) {
-            if ($foto->isValid()) {
-                if (!$foto->hasMoved()) {
-                    $foto->move('uploads/master/', $foto->getRandomName());
-                }
-                $data['foto'] = 'uploads/master/'.$foto->getName();
-                if ($this->request->getPost('oldfoto') != NULL) {
-                    safeUnlink($this->request->getPost('oldfoto'));
-                }
-            }else{
-                session()->setFlashdata('ci_flash_message_foto', $foto->getErrorString() . '(' . $foto->getError() . ')');
-                session()->setFlashdata('ci_flash_message_foto_type', ' text-danger ');
-                
-            };
-        };
-        
-        $this->model->update($id, $data);
-        session()->setFlashdata('ci_flash_message', 'Update item success !');
-        session()->setFlashdata('ci_flash_message_type', ' alert-success ');
-        return redirect()->to(base_url($this->PageData->parent . '/index'));
-    }
-
     //DELETE
     public function delete($id=NULL)
     {
@@ -331,13 +212,32 @@ class Master extends BaseController
             }
             
             $this->model->delete($id);
-            session()->setFlashdata('ci_flash_message', 'Delete item success !');
-            session()->setFlashdata('ci_flash_message_type', ' alert-success ');
+            $pickup = new Pickup_model();
+            $pickup->update($row->id_pickup, ["status" => 0]);
+            $d = new Deliver_model();
+            $d->delete($row->resi);
             return redirect()->to(base_url($this->PageData->parent . '/index'));
         } else {
             session()->setFlashdata('ci_flash_message', 'Sorry... This data is missing !');
             session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
             return redirect()->to(base_url($this->PageData->parent . '/index'));
+        }
+    }
+
+    //DELETE
+    public function set_valid($id = NULL)
+    {
+        $id = $id == NULL ? $this->request->getPostGet("resi") : base64_decode(urldecode($id));
+        $row = $this->model->getById($id);
+
+        if ($row && $id != NULL) {
+
+            $this->model->update($id, ["status" => 1]);
+            return redirect()->back();
+        } else {
+            session()->setFlashdata('ci_flash_message', 'Sorry... This data is missing !');
+            session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
+            return redirect()->back();
         }
     }
 
@@ -348,6 +248,7 @@ class Master extends BaseController
         $res = 0;
         if ($arr!=NULL) {
             if (count($arr)>=1) {
+                $d = new Deliver_model();
                 foreach ($arr as $key => $id) {
                     $row = $this->model->getById($id);
                     if (! $row || $id == NULL) continue;
@@ -357,6 +258,7 @@ class Master extends BaseController
                         }
                     }
                     $this->model->delete($id);
+                    $d->delete($row->resi);
                     $res++;
                 }
             }

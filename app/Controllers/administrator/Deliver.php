@@ -8,6 +8,8 @@ namespace App\Controllers\administrator;
 
 use App\Models\Deliver_model;
 use App\Controllers\BaseController;
+use App\Models\Kurir_model;
+use App\Models\Master_model;
 
 class Deliver extends BaseController
 {
@@ -26,10 +28,9 @@ class Deliver extends BaseController
 
     // This event executed after constructor
     protected function onLoad(){
-        $this->getLocale();
         $this->PageData->parent = "administrator/Deliver";
         $this->PageData->header = (session()->has("level") ? NULL : ucfirst(str_replace("_", '', session("level"))) . " :: ") . 'Deliver';
-        
+        $this->PageData->access = ["administrator"];
         // check access level
         if (! $this->access_allowed()) {
             session()->setFlashdata("ci_login_flash_message", 'Login session outdate. Please re-Login !');
@@ -126,7 +127,7 @@ class Deliver extends BaseController
         $keyword = $this->request->getGetPost("keyword");
         $totalrecord = $this->model->getData($keyword)->countAllResults();        
 
-        $this->PageData->title = "administrator/Deliver";
+        $this->PageData->title = "Delivery Barang";
         $this->PageData->subtitle = [
             $this->PageData->title => 'administrator/Deliver/index'
         ];
@@ -182,22 +183,26 @@ class Deliver extends BaseController
     public function create()
     {
         $this->PageData->header .= ' :: ' . 'Create New Item';
-        $this->PageData->title = "Create Deliver";
+        $this->PageData->title = "Delivery Barang";
         $this->PageData->subtitle = [
-            'Deliver' => 'administrator/Deliver/index',
+            'Delivery' => 'administrator/Deliver/index',
             'Create New Item' => 'administrator/Deliver/create',
         ];
         $this->PageData->url = "administrator/Deliver/create";
-
+        $master = new Master_model();
+        $kurir = new Kurir_model();
         $data = [
             'data' => (object) [
-                'id' => set_value('id'),
+                'id' => set_value('id', generateId("DLVR")),
                 'resi' => set_value('resi'),
                 'username_kurir' => set_value('username_kurir'),
                 'tanggal' => set_value('tanggal'),
                 'status' => set_value('status'),
-                'keterangan' => set_value('keterangan'),
+                'keterangan' => set_value('keterangan')
             ],
+            'listResi' => $master->where("status", 1)->findAll(),
+            'listKurir' => $kurir->findAll(),
+            'disableResi' => FALSE,
             'action' => site_url($this->PageData->parent.'/createAction'),
             'Page' => $this->PageData,
             'Template' => $this->Template
@@ -213,81 +218,81 @@ class Deliver extends BaseController
         };
 
         $data = [
-            'id' => $this->request->getPost('id'),
+            'id' => generateId("DLVR"),
             'resi' => $this->request->getPost('resi'),
             'username_kurir' => $this->request->getPost('username_kurir'),
-            'tanggal' => $this->request->getPost('tanggal'),
-            'status' => $this->request->getPost('status'),
-            'keterangan' => $this->request->getPost('keterangan'),
+            'tanggal' => strtotime("now"),
+            'status' => 0,
+            'keterangan' => NULL,
         ];
         
         $this->model->insert($data);
+        $m = new Master_model();
+        $m->update($this->request->getPost('resi'), ['status' => 2]);
         session()->setFlashdata('ci_flash_message', 'Create item success !');
         session()->setFlashdata('ci_flash_message_type', ' alert-success ');
         return redirect()->to(base_url($this->PageData->parent . '/index'));
     }
-    
+
     //UPDATEfunction
-    public function update($id=NULL)
+    public function update($id = NULL)
     {
         $id = $id == NULL ? $this->request->getPostGet("id") : base64_decode(urldecode($id));
 
         $this->PageData->header .= ' :: ' . 'Update Item';
-        $this->PageData->title = "Update Deliver";
+        $this->PageData->title = "Update Delivery Barang";
         $this->PageData->subtitle = [
-            'Deliver' => 'administrator/Deliver/index',
-            'Update Item' => 'administrator/Deliver/update/' . urlencode(base64_encode($id)),
+            'Delivery' => 'administrator/Deliver/index',
+            'Update Delivery Item' => 'administrator/Deliver/update' . urlencode(base64_encode($id)),
         ];
-        $this->PageData->url = "administrator/Deliver/update/" . urlencode(base64_encode($id));
+        $this->PageData->url = "administrator/Deliver/update" . urlencode(base64_encode($id));
 
         $dataFind = $this->model->getById($id);
 
-        if($dataFind == FALSE || $id == NULL){
+        if ($dataFind == FALSE || $id == NULL) {
             session()->setFlashdata('ci_flash_message', 'Sorry... This data is missing !');
             session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
             return redirect()->to(base_url($this->PageData->parent . '/index'));
         }
+        $master = new Master_model();
+        $kurir = new Kurir_model();
         $data = [
             'data' => (object) [
                 'id' => set_value('id', $dataFind->id),
                 'resi' => set_value('resi', $dataFind->resi),
                 'username_kurir' => set_value('username_kurir', $dataFind->username_kurir),
-                'tanggal' => set_value('tanggal', $dataFind->tanggal),
-                'status' => set_value('status', $dataFind->status),
-                'keterangan' => set_value('keterangan', $dataFind->keterangan),
             ],
-            'action' => site_url($this->PageData->parent.'/updateAction'),
+            'listResi' => $master->where("status", 1)->orWhere("resi", $dataFind->resi)->findAll(),
+            'listKurir' => $kurir->findAll(),
+            'disableResi' => TRUE,
+            'action' => site_url($this->PageData->parent . '/updateAction'),
             'Page' => $this->PageData,
             'Template' => $this->Template
         ];
         return view('administrator/deliver/deliver_form', $data);
     }
-    
+
     //ACTIONUPDATEfunction
     public function updateAction()
     {
         $id = $this->request->getPostGet('oldid');
         $dataFind = $this->model->getById($id);
 
-        if($dataFind == FALSE || $id == NULL){
+        if ($dataFind == FALSE || $id == NULL) {
             session()->setFlashdata('ci_flash_message', 'Sorry... This data is missing !');
             session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
             return redirect()->to(base_url($this->PageData->parent . '/index'));
         };
 
-        if($this->isRequestValid() == FALSE){
+        if ($this->isRequestValid() == FALSE) {
             return $this->update(urlencode(base64_encode($id)));
         };
 
         $data = [
-            'id' => $this->request->getPost('id'),
-            'resi' => $this->request->getPost('resi'),
             'username_kurir' => $this->request->getPost('username_kurir'),
-            'tanggal' => $this->request->getPost('tanggal'),
-            'status' => $this->request->getPost('status'),
-            'keterangan' => $this->request->getPost('keterangan'),
+            'tanggal' => strtotime("now"),
         ];
-        
+
         $this->model->update($id, $data);
         session()->setFlashdata('ci_flash_message', 'Update item success !');
         session()->setFlashdata('ci_flash_message_type', ' alert-success ');
@@ -350,12 +355,8 @@ class Deliver extends BaseController
         $res = FALSE;
 
         $this->validation->setRules([
-                'id' => 'trim|required|max_length[25]',
-                'resi' => 'trim|required|max_length[50]',
+                'resi' => 'trim|max_length[50]',
                 'username_kurir' => 'trim|required|max_length[50]',
-                'tanggal' => 'trim|required|max_length[11]',
-                'status' => 'trim|required|max_length[2]',
-                'keterangan' => 'trim|max_length[65535]',
         ]);
 
         if ($this->validation->withRequest($this->request)->run() == TRUE) {

@@ -69,7 +69,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $defaultLocale = 'en';
+    public $defaultLocale = 'id';
 
     /**
      * --------------------------------------------------------------------------
@@ -96,7 +96,7 @@ class App extends BaseConfig
      *
      * @var string[]
      */
-    public $supportedLocales = ['en'];
+    public $supportedLocales = ['id'];
 
     /**
      * --------------------------------------------------------------------------
@@ -162,7 +162,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $sessionCookieName = 'ci_session';
+    public $sessionCookieName = 'ekspedisi_session';
 
     /**
      * --------------------------------------------------------------------------
@@ -174,7 +174,7 @@ class App extends BaseConfig
      *
      * @var int
      */
-    public $sessionExpiration = 7200;
+    public $sessionExpiration = 86400;
 
     /**
      * --------------------------------------------------------------------------
@@ -355,7 +355,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $CSRFTokenName = 'csrf_test_name';
+    public $CSRFTokenName = 'ekspedisi_nut_csrf_token';
 
     /**
      * --------------------------------------------------------------------------
@@ -368,7 +368,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $CSRFHeaderName = 'X-CSRF-TOKEN';
+    public $CSRFHeaderName = 'ekspedisi_nut-CSRF-TOKEN';
 
     /**
      * --------------------------------------------------------------------------
@@ -381,7 +381,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $CSRFCookieName = 'csrf_cookie_name';
+    public $CSRFCookieName = 'ekspedisi_nut_cookie_name';
 
     /**
      * --------------------------------------------------------------------------
@@ -394,7 +394,7 @@ class App extends BaseConfig
      *
      * @var int
      */
-    public $CSRFExpire = 7200;
+    public $CSRFExpire = 86400;
 
     /**
      * --------------------------------------------------------------------------

@@ -26,10 +26,9 @@ class Admin extends BaseController
 
     // This event executed after constructor
     protected function onLoad(){
-        $this->getLocale();
         $this->PageData->parent = "administrator/Admin";
         $this->PageData->header = (session()->has("level") ? NULL : ucfirst(str_replace("_", '', session("level"))) . " :: ") . 'Admin';
-        
+        $this->PageData->access = ["administrator"];
         // check access level
         if (! $this->access_allowed()) {
             session()->setFlashdata("ci_login_flash_message", 'Login session outdate. Please re-Login !');
