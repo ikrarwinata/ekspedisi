@@ -21,7 +21,7 @@ CREATE TABLE `deliver` (
   `resi` varchar(50) NOT NULL,
   `username_kurir` varchar(50) NOT NULL,
   `tanggal` int(11) NOT NULL,
-  `status` enum('-1','0','1','2') NOT NULL DEFAULT '0',
+  `status` int(1) NOT NULL DEFAULT 0,
   `keterangan` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -42,6 +42,7 @@ CREATE TABLE `master` (
   `id_pickup` varchar(25) DEFAULT NULL,
   `id_olshop` varchar(25) NOT NULL,
   `foto` text DEFAULT NULL,
+  `thumbnail` text DEFAULT NULL,
   `harga` float NOT NULL,
   `kurir` varchar(50) NOT NULL,
   `status` int(1) NOT NULL DEFAULT 0,
@@ -68,11 +69,9 @@ CREATE TABLE `pickup` (
 
 INSERT INTO admin(username,password,nama,hp,email) VALUES('admin','21232f297a57a5a743894a0e4a801fc3','admin','admin','admin');
 
-INSERT INTO deliver(id,resi,username_kurir,tanggal,status,keterangan) VALUES('DLVR1633965647','R1633961834','kurir1',1633967724,'0',NULL);
 
 INSERT INTO kurir(username,password,nama,hp,email) VALUES('kurir1','25d55ad283aa400af464c76d713c07ad','kurir1','kurir1','kurir1');
 
-INSERT INTO master(resi,id_pickup,id_olshop,foto,harga,kurir,status) VALUES('R1633961834','PICK1633954085','OSP1633952497',X'75706c6f6164732f6d61737465722f313633333936313833345f36343138316263326461376133356232656136302e6a7067',12312300000000,'kurir1',2);
 
 INSERT INTO olshop(id,nama,alamat) VALUES('OSP1633952497','Olshop1',X'6a6a6a6a6a6a');
-INSERT INTO pickup(id,id_olshop,jumlah_barang,kurir,status) VALUES('PICK1633954085','OSP1633952497',2,'kurir1',0);
+INSERT INTO pickup(id,id_olshop,jumlah_barang,kurir,status) VALUES('PICK1633984957','OSP1633952497',3,'kurir1',0);

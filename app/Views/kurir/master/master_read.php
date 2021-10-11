@@ -35,7 +35,7 @@ $this->section('content'); ?>
                             </tr>
                             <tr>
                                 <th width="15%">Foto</th>
-                                <td>: <a href="<?php echo (base_url($data->foto)) ?>"><img src="<?php echo (base_url($data->foto)) ?>" style="width: 40px; height: auto;"></a></td>
+                                <td>: <a href="<?php echo (base_url($data->foto)) ?>"><img src="<?php echo (base_url($data->thumbnail)) ?>" style="width: 40px; height: auto;"></a></td>
                             </tr>
                             <tr>
                                 <th width="15%">harga</th>

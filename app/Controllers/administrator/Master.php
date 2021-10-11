@@ -127,16 +127,16 @@ class Master extends BaseController
         $page = $this->request->getGet("page");
         $page = $page<=0?1:$page;
         $keyword = $this->request->getGetPost("keyword");
-        $s = "status = 0";
+        $s = "master.status = 0";
         if ($status == 1) {
-            $s = "status = 1";
+            $s = "master.status = 1";
             $this->PageData->title = "Pickup Selesai";
             $this->PageData->subtitle = [
                 $this->PageData->title => 'administrator/Master/index'
             ];
             $this->PageData->url = "administrator/Master/index";
         }else {
-            $s = "status = 0";
+            $s = "master.status = 0";
             $this->PageData->title = "Verivikasi Pickup";
             $this->PageData->subtitle = [
                 $this->PageData->title => 'administrator/Master/verivikasi'
@@ -165,7 +165,7 @@ class Master extends BaseController
     }
 
     //INDEX
-    public function verivikasi()
+    public function verifikasi()
     {
         return $this->index(0);
     }
@@ -208,6 +208,7 @@ class Master extends BaseController
             if (isset($row->foto)) {
                 if ($row->foto != NULL) {
                     safeUnlink($row->foto);
+                    safeUnlink($row->thumbnail);
                 }
             }
             
@@ -255,6 +256,7 @@ class Master extends BaseController
                     if (isset($row->foto)) {
                         if ($row->foto != NULL) {
                             safeUnlink($row->foto);
+                            safeUnlink($row->thumbnail);
                         }
                     }
                     $this->model->delete($id);

@@ -180,8 +180,9 @@ class Deliver extends BaseController
     }
 
     //CREATEfunction
-    public function create()
+    public function create($resi = NULL)
     {
+        if ($resi != NULL) $resi = base64_decode(urldecode($resi));
         $this->PageData->header .= ' :: ' . 'Delivery Barang';
         $this->PageData->title = "Add Stock Delivery Kurir";
         $this->PageData->subtitle = [
@@ -194,7 +195,7 @@ class Deliver extends BaseController
         $data = [
             'data' => (object) [
                 'id' => set_value('id', generateId("DLVR")),
-                'resi' => set_value('resi'),
+                'resi' => set_value('resi', $resi),
                 'username_kurir' => set_value('username_kurir'),
                 'tanggal' => set_value('tanggal'),
                 'status' => set_value('status'),
@@ -306,8 +307,15 @@ class Deliver extends BaseController
         $row = $this->model->getById($id);
 
         if ($row && $id != NULL) {
-            
-            
+            if (isset($row->foto)) {
+                if ($row->foto != NULL) {
+                    safeUnlink($row->foto);
+                    safeUnlink($row->thumbnail);
+                }
+            }
+
+            $master = new Master_model();
+            $master->delete($row->resi);            
             $this->model->delete($id);
             session()->setFlashdata('ci_flash_message', 'Delete item success !');
             session()->setFlashdata('ci_flash_message_type', ' alert-success ');

@@ -116,7 +116,7 @@ $this->section('content');
                                                 <td class="align-middle"><input type="checkbox" class="child-table-checkbox" name="removeme[]" value="<?php echo $value->resi ?>" checked="true"></td>
                                                 <td class="text-center" width="60px">
                                                     <?php if (isset($value->foto) && $value->foto != NULL) : ?>
-                                                        <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->foto)) ?>" style="width:60px;height: auto;"></a>
+                                                        <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->thumbnail)) ?>" style="width:60px;height: auto;"></a>
                                                     <?php endif ?>
                                                 </td>
                                                 <td><?php echo ($value->resi) ?></td>
@@ -134,6 +134,11 @@ $this->section('content');
                                                                     <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/set_valid/' . urlencode(base64_encode($value->resi))) ?>" onclick="return confirm('Anda yakin verivikasi item ini?')" title="<?php echo ('Valid') ?>">
                                                                         <i class="fa fa-check fa-lg"></i>&nbsp;
                                                                         Verivikasi
+                                                                    </a>
+                                                                <?php else : ?>
+                                                                    <a class="dropdown-item" href="<?php echo base_url('administrator/Deliver/create/' . urlencode(base64_encode($value->resi))) ?>" title="<?php echo ('Valid') ?>">
+                                                                        <i class="fa fa-shipping-fast fa-lg"></i>&nbsp;
+                                                                        Delivery
                                                                     </a>
                                                                 <?php endif; ?>
                                                                 <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/delete/' . urlencode(base64_encode($value->resi))) ?>" onclick="return confirm('Anda yakin hapus item ini ? Data Delivery yang bersangkutan juga akan dihapus')" title="<?php echo ('Hapus') ?>">

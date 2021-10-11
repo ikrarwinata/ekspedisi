@@ -220,7 +220,10 @@ class Pickup extends BaseController
                 if (!$foto->hasMoved()) {
                     $foto->move('uploads/master/', $foto->getRandomName());
                 }
-                $data['foto'] = 'uploads/master/' . $foto->getName();
+                $n = $foto->getName();
+                $data['foto'] = 'uploads/master/' . $n;
+                $data['thumbnail'] = 'uploads/master/th' . $n;
+                makeThumbnails('uploads/master/', $n);
             } else {
                 session()->setFlashdata('ci_flash_message_foto', $foto->getErrorString() . ' (' . $foto->getError() . ')');
                 session()->setFlashdata('ci_flash_message_foto_type', ' text-danger ');
@@ -246,6 +249,7 @@ class Pickup extends BaseController
             if (isset($row->foto)) {
                 if ($row->foto != NULL) {
                     safeUnlink($row->foto);
+                    safeUnlink($row->thumbnail);
                 }
             }
 

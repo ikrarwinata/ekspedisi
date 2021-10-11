@@ -4,6 +4,8 @@ $this->section('content'); ?>
 <div class="col-12">
     <div class="card badge-secondary">
         <div class="card-body">
+            <small>Jumlah Pickup : <?php echo ($data->jumlah_barang) ?></small>
+            <hr>
             <small>Alamat : <?php echo ($olshop->alamat) ?></small>
         </div>
     </div>
@@ -36,7 +38,7 @@ $this->section('content'); ?>
                                             <td class="text-center"><?php echo (++$i) ?></td>
                                             <td class="text-center" width="70px">
                                                 <?php if (isset($value->foto) && $value->foto != NULL) : ?>
-                                                    <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->foto)) ?>" style="width: 60px;height: auto;"></a>
+                                                    <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->thumbnail)) ?>" style="width: 60px;height: auto;"></a>
                                                 <?php endif ?>
                                             </td>
                                             <td>
@@ -61,7 +63,7 @@ $this->section('content'); ?>
                             <label for="foto" data-toggle="tooltip" title="<?php echo ('Optional') ?>">Foto&nbsp;<code>*</code></label>
                             <div class="row">
                                 <div class="col-lg-12 col-md-12">
-                                    <input type="file" name="foto" id="foto" accept="image/*" class="form-control <?php echo (session()->getFlashdata('ci_flash_message_foto_type')) ?>" required>
+                                    <input type="file" name="foto" id="foto" accept="image/*" class="form-control <?php echo (session()->getFlashdata('ci_flash_message_foto_type')) ?>" required multiple="false">
                                     <div class="invalid-feedback">
                                         <?php echo (session()->getFlashdata('ci_flash_message_foto')) ?>
                                     </div>

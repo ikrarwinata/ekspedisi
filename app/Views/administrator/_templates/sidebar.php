@@ -54,10 +54,10 @@
 					</ul>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
-							<a href="<?php echo (base_url('administrator/Master/verivikasi')) ?>" class="nav-link">
+							<a href="<?php echo (base_url('administrator/Master/verifikasi')) ?>" class="nav-link">
 								<i class="fas fa-question-circle nav-icon"></i>
 								<p>
-									Butuh Verivikasi
+									Butuh Verifikasi
 									<?php if (session()->has("verivikasi") && session("verivikasi") >= 1) : ?>
 										<span class="right badge badge-danger"><?php echo (session("verivikasi")) ?></span>
 									<?php endif; ?>

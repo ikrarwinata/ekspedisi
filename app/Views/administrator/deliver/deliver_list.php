@@ -122,7 +122,7 @@ $this->section('content');
                                                 <td class="align-middle"><input type="checkbox" class="child-table-checkbox" name="removeme[]" value="<?php echo $value->id ?>" checked="true"></td>
                                                 <td class="text-center" width="60px">
                                                     <?php if (isset($value->foto) && $value->foto != NULL) : ?>
-                                                        <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->foto)) ?>" style="width:60px;height: auto;"></a>
+                                                        <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->thumbnail)) ?>" style="width:60px;height: auto;"></a>
                                                     <?php endif ?>
                                                 </td>
                                                 <td><a href="<?php echo (base_url('administrator/Master/read/' . urlencode(base64_encode($value->resi)))) ?>"><?php echo ($value->resi) ?></a></td>

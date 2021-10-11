@@ -98,7 +98,7 @@ $this->section('content');
                                             <td class="text-center"><?php echo $counter++ ?></td>
                                             <td class="text-center" width="60px">
                                                 <?php if (isset($value->foto) && $value->foto != NULL) : ?>
-                                                    <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->foto)) ?>" style="width:60px;height: auto;"></a>
+                                                    <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->thumbnail)) ?>" style="width:60px;height: auto;"></a>
                                                 <?php endif ?>
                                             </td>
                                             <td><a href="<?php echo (base_url('kurir/Deliver/read/' . urlencode(base64_encode($value->resi)))) ?>"><?php echo ($value->resi) ?></a></td>

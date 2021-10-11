@@ -16,7 +16,7 @@ class Master_model extends Model
     //To help protect against Mass Assignment Attacks, the Model class requires 
     //that you list all of the field names that can be changed during inserts and updates
     // https://codeigniter4.github.io/userguide/models/model.html#protecting-fields
-    protected $allowedFields = ['resi', 'id_pickup', 'id_olshop', 'foto', 'harga', 'kurir','status'];
+    protected $allowedFields = ['resi', 'id_pickup', 'id_olshop', 'foto', 'thumbnail', 'harga', 'kurir','status'];
 
     protected $useAutoIncrement = false;
 

@@ -53,7 +53,7 @@ $this->section('content'); ?>
                         <input type="hidden" id="oldid" class="form-control" name="oldid" style="display:none;" value="<?php echo $data->id ?>">
                         <div class="d-flex p-2 bd-highlight">
                             <div class="form-group">
-                                <a class="btn btn-sm btn-danger" href="<?php echo base_url($Page->parent . '/index') ?>"><?php echo 'Cancel' ?></a>
+                                <button class="btn btn-sm btn-danger" onclick="window.history.go(-1)">Cancel</button>
                                 <button class="btn btn-sm btn-primary" type="submit"><?php echo 'Save' ?></button>
                             </div>
                         </div>
