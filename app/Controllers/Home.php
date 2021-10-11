@@ -71,7 +71,6 @@ class Home extends BaseController
 			$adminM = new Admin_model();
 			$res = $kurirM->getRowBy("username", $username);
 			$res2 = $adminM->getRowBy("username", $username);
-			$res3 = $superadminM->getRowBy("username", $username);
 			if ($res) {
 				$data = [
 					"login" => $res->username,
@@ -84,14 +83,6 @@ class Home extends BaseController
 				$data = [
 					"login" => $res2->username,
 					"login_name" => $res2->nama,
-					"loginAttemps" => 0,
-				];
-				session()->set($data);
-				return view("login_password");
-			} else if ($res3) {
-				$data = [
-					"login" => $res3->username,
-					"login_name" => $res3->nama,
 					"loginAttemps" => 0,
 				];
 				session()->set($data);
