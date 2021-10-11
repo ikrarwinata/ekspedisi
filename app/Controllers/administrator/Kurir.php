@@ -212,7 +212,7 @@ class Kurir extends BaseController
         };
 
         $data = [
-            // 'username' => $this->request->getPost('username'),
+            'username' => $this->request->getPost('username'),
             'password' => md5($this->request->getPost('password.')),
             'nama' => $this->request->getPost('nama'),
             'hp' => $this->request->getPost('hp'),
@@ -277,7 +277,7 @@ class Kurir extends BaseController
         };
 
         $data = [
-            // 'username' => $this->request->getPost('username'),
+            'username' => $this->request->getPost('username'),
             'password' => md5($this->request->getPost('password')),
             'nama' => $this->request->getPost('nama'),
             'hp' => $this->request->getPost('hp'),
@@ -346,6 +346,7 @@ class Kurir extends BaseController
         $res = FALSE;
 
         $this->validation->setRules([
+                'username' => 'trim|required|max_length[50]',
                 'password' => 'trim|required|min_length[8]|max_length[100]',
                 'nama' => 'trim|required|max_length[150]',
                 'hp' => 'trim|max_length[25]',

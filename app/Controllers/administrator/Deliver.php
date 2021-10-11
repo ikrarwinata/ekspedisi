@@ -216,7 +216,7 @@ class Deliver extends BaseController
             'id' => $this->request->getPost('id'),
             'resi' => $this->request->getPost('resi'),
             'username_kurir' => $this->request->getPost('username_kurir'),
-            'tanggal' => $this->request->getPost('tanggal.'),
+            'tanggal' => $this->request->getPost('tanggal'),
             'status' => $this->request->getPost('status'),
             'keterangan' => $this->request->getPost('keterangan'),
         ];
@@ -353,7 +353,7 @@ class Deliver extends BaseController
                 'id' => 'trim|required|max_length[25]',
                 'resi' => 'trim|required|max_length[50]',
                 'username_kurir' => 'trim|required|max_length[50]',
-                'tanggal' => 'trim|required|min_length[1]|max_length[11]',
+                'tanggal' => 'trim|required|max_length[11]',
                 'status' => 'trim|required|max_length[2]',
                 'keterangan' => 'trim|max_length[65535]',
         ]);

@@ -195,6 +195,7 @@ class Master extends BaseController
                 'id_olshop' => set_value('id_olshop'),
                 'foto' => set_value('foto'),
                 'harga' => set_value('harga'),
+                'status' => set_value('status'),
             ],
             'action' => site_url($this->PageData->parent.'/createAction'),
             'Page' => $this->PageData,
@@ -213,9 +214,22 @@ class Master extends BaseController
         $data = [
             'resi' => $this->request->getPost('resi'),
             'id_olshop' => $this->request->getPost('id_olshop'),
-            'foto' => $this->request->getPost('foto'),
             'harga' => $this->request->getPost('harga.'),
+            'status' => $this->request->getPost('status'),
         ];
+        
+        if ($foto = $this->request->getFile('foto')) {
+            if ($foto->isValid()) {
+                if (!$foto->hasMoved()) {
+                    $foto->move('uploads/master/', $foto->getRandomName());
+                }
+                $data['foto'] = 'uploads/master/'.$foto->getName();
+            }else{
+                session()->setFlashdata('ci_flash_message_foto', $foto->getErrorString() . ' (' . $foto->getError() . ')');
+                session()->setFlashdata('ci_flash_message_foto_type', ' text-danger ');
+                
+            };
+        };
         
         $this->model->insert($data);
         session()->setFlashdata('ci_flash_message', 'Create item success !');
@@ -249,6 +263,7 @@ class Master extends BaseController
                 'id_olshop' => set_value('id_olshop', $dataFind->id_olshop),
                 'foto' => set_value('foto', $dataFind->foto),
                 'harga' => set_value('harga', $dataFind->harga),
+                'status' => set_value('status', $dataFind->status),
             ],
             'action' => site_url($this->PageData->parent.'/updateAction'),
             'Page' => $this->PageData,
@@ -276,9 +291,25 @@ class Master extends BaseController
         $data = [
             'resi' => $this->request->getPost('resi'),
             'id_olshop' => $this->request->getPost('id_olshop'),
-            'foto' => $this->request->getPost('foto'),
             'harga' => $this->request->getPost('harga'),
+            'status' => $this->request->getPost('status'),
         ];
+        
+        if ($foto = $this->request->getFile('foto')) {
+            if ($foto->isValid()) {
+                if (!$foto->hasMoved()) {
+                    $foto->move('uploads/master/', $foto->getRandomName());
+                }
+                $data['foto'] = 'uploads/master/'.$foto->getName();
+                if ($this->request->getPost('oldfoto') != NULL) {
+                    safeUnlink($this->request->getPost('oldfoto'));
+                }
+            }else{
+                session()->setFlashdata('ci_flash_message_foto', $foto->getErrorString() . '(' . $foto->getError() . ')');
+                session()->setFlashdata('ci_flash_message_foto_type', ' text-danger ');
+                
+            };
+        };
         
         $this->model->update($id, $data);
         session()->setFlashdata('ci_flash_message', 'Update item success !');
@@ -293,7 +324,11 @@ class Master extends BaseController
         $row = $this->model->getById($id);
 
         if ($row && $id != NULL) {
-            
+            if (isset($row->foto)) {
+                if ($row->foto != NULL) {
+                    safeUnlink($row->foto);
+                }
+            }
             
             $this->model->delete($id);
             session()->setFlashdata('ci_flash_message', 'Delete item success !');
@@ -316,7 +351,11 @@ class Master extends BaseController
                 foreach ($arr as $key => $id) {
                     $row = $this->model->getById($id);
                     if (! $row || $id == NULL) continue;
-                    
+                    if (isset($row->foto)) {
+                        if ($row->foto != NULL) {
+                            safeUnlink($row->foto);
+                        }
+                    }
                     $this->model->delete($id);
                     $res++;
                 }
@@ -344,8 +383,8 @@ class Master extends BaseController
         $this->validation->setRules([
                 'resi' => 'trim|required|max_length[50]',
                 'id_olshop' => 'trim|required|max_length[25]',
-                'foto' => 'trim|max_length[65535]',
                 'harga' => 'trim|required|min_length[1]|max_length[11]',
+                'status' => 'trim|required|max_length[11]',
         ]);
 
         if ($this->validation->withRequest($this->request)->run() == TRUE) {

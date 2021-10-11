@@ -14,20 +14,6 @@ $this->section('content');
             <?php echo form_open_multipart(base_url($Page->parent.'/fromExcel'), 'class="form-inline"'); ?>
             <a href="<?php echo base_url($Page->parent.'/create') ?>" class="btn btn-sm btn-primary"><?php echo 'Create New Item' ?></a>&nbsp;
             <!--ENDIMPORTEXCELFILE-->
-            <!--EXPORTBUTTONS-->
-            <div class="dropdown">
-                <button class="btn btn-sm btn-info dropdown-toggle ml-2 <?php echo (count($data) == 0 ? 'disabled' : NULL) ?>" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Export
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <!--ENDEXPORTTOEXCEL-->
-                    <!--ENDEXPORTTOWORD-->
-                    <!--ENDEXPORTTOPDF-->
-                    <!--PRINTALL-->
-                    <a class="dropdown-item" href="<?php echo base_url($Page->parent.'/printAll') ?>" target="_blank">Print All</a>
-                    <!--ENDPRINTALL-->
-                </div>
-            </div>
             <!--ENDEXPORTBUTTONS-->
             </form>
         </div>

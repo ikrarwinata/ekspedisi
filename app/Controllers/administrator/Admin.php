@@ -365,41 +365,5 @@ class Admin extends BaseController
         return $res;
     }
 
-    //PRINTfunction
-    public function printAll(){
-        // Table sorting using GET var
-        $sortcolumn = $this->request->getGetPost("sortcolumn");
-        $sortorder = $this->request->getGetPost("sortorder");
-        if ($sortcolumn == NULL || $sortorder == NULL){
-            if (session()->has("sorting_table")) {
-                if (session("sorting_table")==$this->model->table) {
-                    $sortcolumn = session("sortcolumn");
-                    $sortorder = session("sortorder");
-                };
-            };
-        }else{
-            $sortcolumn = base64_decode($sortcolumn);
-        }
-        if ($sortcolumn != NULL && $sortorder != NULL) {
-            if ($sortorder != "DESC" && $sortorder != "ASC") $sortorder = "ASC";
-            if(in_array($sortcolumn, $this->model->getFields())){
-                $this->model->order = $sortorder;
-                $this->model->columnIndex = $sortcolumn;
-            }
-        }
-
-        $this->PageData->title = "Admin Data";
-        $this->PageData->subtitle = ["Admin", "Print All"];
-        $this->PageData->url = "administrator/Admin/printAll/";
-
-        $data = array(
-            'Page' => $this->PageData,
-            'data' => $this->model->sort()->findAll(),
-            'start' => 0
-        );
-        
-        return view('administrator/admin/admin_print', $data);
-    }
-    
     //ENDFUNCTION
 }

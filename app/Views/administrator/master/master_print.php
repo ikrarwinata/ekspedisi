@@ -48,6 +48,9 @@
                 <th>
                 Harga
             </th>
+                <th>
+                Status
+            </th>
             </tr>
         </thead>
         <tbody>
@@ -55,8 +58,13 @@
                 <tr>
                     <td><?php echo ($value->resi) ?></td>
                     <td><?php echo ($value->id_olshop) ?></td>
-                    <td><?php echo ($value->foto) ?></td>
+                    <td class="text-center">
+                            <?php if (isset($value->foto) && $value->foto != NULL): ?>
+                            <a href="<?php echo (base_url($value->foto)) ?>" class="btn btn-sm btn-default">File</a>
+                        <?php endif ?>
+                    </td>
                     <td class="text-center"><?php echo ( $value->harga) ?></td>
+                    <td><?php echo ($value->status) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

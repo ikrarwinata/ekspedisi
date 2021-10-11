@@ -149,7 +149,7 @@ $this->section('content');
                                                 <td><?php echo ($value->id) ?></td>
                                                <td><?php echo ($value->resi) ?></td>
                                                <td><?php echo ($value->username_kurir) ?></td>
-                                               <td class="text-center"><?php echo ($value->tanggal) ?></td>
+                                               <td><?php echo ($value->tanggal) ?></td>
                                                <td><?php echo ($value->status) ?></td>
                                                <td><?php echo ($value->keterangan) ?></td>
                                                 <td>

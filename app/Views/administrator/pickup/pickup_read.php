@@ -22,9 +22,6 @@ $this->section('content'); ?>
                     <table class="table table-light table-striped">
                         <tbody>
                             <tr>
-                            <th width="15%">id</th><td>: <?php echo ($data->id); ?></td>
-                        </tr>
-                            <tr>
                             <th width="15%">id_olshop</th><td>: <?php echo ($data->id_olshop); ?></td>
                         </tr>
                             <tr>

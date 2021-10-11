@@ -28,10 +28,13 @@ $this->section('content'); ?>
                             <th width="15%">id_olshop</th><td>: <?php echo ($data->id_olshop); ?></td>
                         </tr>
                             <tr>
-                            <th width="15%">foto</th><td>: <?php echo ($data->foto); ?></td>
+                            <th width="15%">File</th><td>: <a href="<?php echo (base_url($data->foto)) ?>" class="btn btn-sm btn-default">File</a></td>
                         </tr>
                             <tr>
                             <th width="15%">harga</th><td>: <?php echo ($data->harga); ?></td>
+                        </tr>
+                            <tr>
+                            <th width="15%">status</th><td>: <?php echo ($data->status); ?></td>
                         </tr>
                         </tbody>
                     </table>

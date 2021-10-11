@@ -211,7 +211,7 @@ class Pickup extends BaseController
         };
 
         $data = [
-            'id' => $this->request->getPost('id'),
+            // 'id' => $this->request->getPost('id'),
             'id_olshop' => $this->request->getPost('id_olshop'),
             'jumlah_barang' => $this->request->getPost('jumlah_barang.'),
             'kurir' => $this->request->getPost('kurir'),
@@ -274,7 +274,7 @@ class Pickup extends BaseController
         };
 
         $data = [
-            'id' => $this->request->getPost('id'),
+            // 'id' => $this->request->getPost('id'),
             'id_olshop' => $this->request->getPost('id_olshop'),
             'jumlah_barang' => $this->request->getPost('jumlah_barang'),
             'kurir' => $this->request->getPost('kurir'),
@@ -342,7 +342,6 @@ class Pickup extends BaseController
         $res = FALSE;
 
         $this->validation->setRules([
-                'id' => 'trim|required|max_length[25]',
                 'id_olshop' => 'trim|required|max_length[25]',
                 'jumlah_barang' => 'trim|required|min_length[1]|max_length[11]',
                 'kurir' => 'trim|required|max_length[50]',
@@ -360,41 +359,5 @@ class Pickup extends BaseController
         return $res;
     }
 
-    //PRINTfunction
-    public function printAll(){
-        // Table sorting using GET var
-        $sortcolumn = $this->request->getGetPost("sortcolumn");
-        $sortorder = $this->request->getGetPost("sortorder");
-        if ($sortcolumn == NULL || $sortorder == NULL){
-            if (session()->has("sorting_table")) {
-                if (session("sorting_table")==$this->model->table) {
-                    $sortcolumn = session("sortcolumn");
-                    $sortorder = session("sortorder");
-                };
-            };
-        }else{
-            $sortcolumn = base64_decode($sortcolumn);
-        }
-        if ($sortcolumn != NULL && $sortorder != NULL) {
-            if ($sortorder != "DESC" && $sortorder != "ASC") $sortorder = "ASC";
-            if(in_array($sortcolumn, $this->model->getFields())){
-                $this->model->order = $sortorder;
-                $this->model->columnIndex = $sortcolumn;
-            }
-        }
-
-        $this->PageData->title = "Pickup Data";
-        $this->PageData->subtitle = ["Pickup", "Print All"];
-        $this->PageData->url = "administrator/Pickup/printAll/";
-
-        $data = array(
-            'Page' => $this->PageData,
-            'data' => $this->model->sort()->findAll(),
-            'start' => 0
-        );
-        
-        return view('administrator/pickup/pickup_print', $data);
-    }
-    
     //ENDFUNCTION
 }

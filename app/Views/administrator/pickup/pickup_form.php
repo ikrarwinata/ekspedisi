@@ -22,15 +22,6 @@ $this->section('content'); ?>
                     <form action="<?php echo ($action) ?>" method="post">
                         <div class="form-row">
                             <div class="col-12 mb-3">
-                                <label for="id" data-toggle="tooltip" title="<?php echo ('Required') ?>">Id&nbsp;<code>*</code></label>
-                                <input type="text" class="form-control <?php echo (session()->getFlashdata('ci_flash_message_id_type')) ?>" autocomplete="on" name="id" id="id" maxlength="25" placeholder="Id" value="<?php echo ($data->id); ?>" required />
-                                <div class="invalid-feedback">
-                                    <?php echo (session()->getFlashdata('ci_flash_message_id')) ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-12 mb-3">
                                 <label for="id_olshop" data-toggle="tooltip" title="<?php echo ('Required') ?>">Id_olshop&nbsp;<code>*</code></label>
                                 <select class="form-control <?php echo (session()->getFlashdata('ci_flash_message_id_olshop_type')) ?>" id="id_olshop" name="id_olshop" placeholder="id_olshop">
                                     <option value="<?php echo ($data->id_olshop) ?>"><?php echo ($data->id_olshop) ?></option>

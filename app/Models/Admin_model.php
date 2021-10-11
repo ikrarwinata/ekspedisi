@@ -53,9 +53,9 @@ class Admin_model extends Model
      *
      * @access	public
      * @param	mixed	$id 	the id
-     * @return	object|array 	return as array or object of the first result.
+     * @return	mixed 	return as array or object of the first result.
      */
-    public function getById(mixed $id) : object|array
+    public function getById(mixed $id) : mixed
     {
         return $this->where($this->primaryKey, $id)->sort()->first();
     }
@@ -66,9 +66,9 @@ class Admin_model extends Model
      * @access	public
      * @param	string	$key 	the column name
      * @param	string	$val 	the column value
-     * @return	object|array 	return as array or object of the first result.
+     * @return	mixed	return as array or object of the first result.
      */
-    public function getRowBy(string $key, string $val): object|array
+    public function getRowBy(string $key, string $val): mixed
     {
         return $this->where($key, $val)->sort()->first();
     }
@@ -81,7 +81,7 @@ class Admin_model extends Model
      * @param	string	$val 	the column value
      * @return	object|array 	return as array or object of the result.
      */
-    public function getBy($key, $val): object|array
+    public function getBy($key, $val): mixed
     {
         return $this->where($key, $val)->sort()->findAll();
     }

@@ -119,6 +119,14 @@ $this->section('content');
                                                         Harga
                                                     </a>
                                                 </th>
+                                               <th style="transform: rotate(0);">
+                                                    <a href="<?php echo (base_url($Page->parent . '/index?sortcolumn=' . base64_encode('status') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
+                                                        <?php if ($sortcolumn == "status"): ?>
+                                                            <i class="fas fa-sort-alpha-<?php echo ($sortorder == 'DESC' ? 'down' : 'up'); ?>"></i>&nbsp;
+                                                        <?php endif ?>
+                                                        Status
+                                                    </a>
+                                                </th>
                                                 <th width="80px">&nbsp;</th>
                                             </tr>
                                         </thead>
@@ -132,8 +140,13 @@ $this->section('content');
                                                 <td class="align-middle"><input type="checkbox" class="" name="removeme[]" value="<?php echo $value->resi ?>" checked="true"></td>
                                                 <td><?php echo ($value->resi) ?></td>
                                                <td><?php echo ($value->id_olshop) ?></td>
-                                               <td><?php echo ($value->foto) ?></td>
+                                                <td class="text-center">
+                                                    <?php if (isset($value->foto) && $value->foto != NULL): ?>
+                                                        <a href="<?php echo (base_url($value->foto)) ?>" class="btn btn-sm btn-default">File</a>
+                                                    <?php endif ?>
+                                                </td>
                                                <td class="text-center"><?php echo ($value->harga) ?></td>
+                                               <td><?php echo ($value->status) ?></td>
                                                 <td>
                                                     <span class="float-right">
                                                         <div class="dropdown dropleft">

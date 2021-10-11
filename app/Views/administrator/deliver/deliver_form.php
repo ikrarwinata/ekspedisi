@@ -32,7 +32,9 @@ $this->section('content'); ?>
                         <div class="form-row">
                             <div class="col-12 mb-3">
                                 <label for="resi" data-toggle="tooltip" title="<?php echo ('Required') ?>">Resi&nbsp;<code>*</code></label>
-                                <input type="text" class="form-control <?php echo (session()->getFlashdata('ci_flash_message_resi_type')) ?>" autocomplete="on" name="resi" id="resi" maxlength="50" placeholder="Resi" value="<?php echo ($data->resi); ?>" required />
+                                <select class="form-control <?php echo (session()->getFlashdata('ci_flash_message_resi_type')) ?>" id="resi" name="resi" placeholder="resi">
+                                    <option value="<?php echo ($data->resi) ?>"><?php echo ($data->resi) ?></option>
+                                </select>
                                 <div class="invalid-feedback">
                                     <?php echo (session()->getFlashdata('ci_flash_message_resi')) ?>
                                 </div>
@@ -41,7 +43,9 @@ $this->section('content'); ?>
                         <div class="form-row">
                             <div class="col-12 mb-3">
                                 <label for="username_kurir" data-toggle="tooltip" title="<?php echo ('Required') ?>">Username_kurir&nbsp;<code>*</code></label>
-                                <input type="text" class="form-control <?php echo (session()->getFlashdata('ci_flash_message_username_kurir_type')) ?>" autocomplete="on" name="username_kurir" id="username_kurir" maxlength="50" placeholder="Username_kurir" value="<?php echo ($data->username_kurir); ?>" required />
+                                <select class="form-control <?php echo (session()->getFlashdata('ci_flash_message_username_kurir_type')) ?>" id="username_kurir" name="username_kurir" placeholder="username_kurir">
+                                    <option value="<?php echo ($data->username_kurir) ?>"><?php echo ($data->username_kurir) ?></option>
+                                </select>
                                 <div class="invalid-feedback">
                                     <?php echo (session()->getFlashdata('ci_flash_message_username_kurir')) ?>
                                 </div>
@@ -50,7 +54,7 @@ $this->section('content'); ?>
                         <div class="form-row">
                             <div class="col-12 mb-3">
                                 <label for="tanggal" data-toggle="tooltip" title="<?php echo ('Required') ?>">Tanggal&nbsp;<code>*</code></label>
-                                <input type="number" class="form-control <?php echo (session()->getFlashdata('ci_flash_message_tanggal_type')) ?>" name="tanggal" id="tanggal" value="<?php echo ($data->tanggal); ?>" required />
+                                <input type="date" class="form-control <?php echo (session()->getFlashdata('ci_flash_message_tanggal_type')) ?>" name="tanggal" id="tanggal" value="<?php echo ($data->tanggal); ?>" required />
                                 <div class="invalid-feedback">
                                     <?php echo (session()->getFlashdata('ci_flash_message_tanggal')) ?>
                                 </div>
@@ -59,7 +63,12 @@ $this->section('content'); ?>
                         <div class="form-row">
                             <div class="col-12 mb-3">
                                 <label for="status" data-toggle="tooltip" title="<?php echo ('Required') ?>">Status&nbsp;<code>*</code></label>
-                                <input type="radio" name="status" id="status" value="<?php echo ($data->status); ?>" required />&nbsp;<label for="status">status</label>
+                                <select class="form-control <?php echo (session()->getFlashdata('ci_flash_message_status_type')) ?>" id="status" name="status" placeholder="status">
+                                    <option value="<?php echo ($data->status) ?>"><?php echo ($data->status) ?></option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    <?php echo (session()->getFlashdata('ci_flash_message_status')) ?>
+                                </div>
                             </div>
                         </div>
                         <div class="form-row">
