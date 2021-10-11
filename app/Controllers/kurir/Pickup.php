@@ -268,6 +268,11 @@ class Pickup extends BaseController
         $dataFind = $this->model->getById($id);
         if ($dataFind->jumlah_barang <= $c){
             $this->model->update($id, ['status' => 1]);
+        }else {
+            session()->setFlashdata('swalOpen', '1');
+            session()->setFlashdata('swalTitle', 'Pickup Belum Selesai');
+            session()->setFlashdata('swalText', 'Barang yang harus di pickup sebanyak ' . $dataFind->jumlah_barang);
+            session()->setFlashdata('swalIcon', 'warning');
         }
         return redirect()->back();
     }

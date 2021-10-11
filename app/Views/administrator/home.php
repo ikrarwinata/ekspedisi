@@ -25,9 +25,9 @@ $this->section('content');
 			<p>Delivery Cancel</p>
 		</div>
 		<div class="icon">
-			<i class="ion ion-bag"></i>
+			<i class="fa fa-times-circle"></i>
 		</div>
-		<a href="<?php echo (base_url('administrator/Master/verivikasi')) ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+		<a href="<?php echo (base_url('administrator/Deliver/index')) ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 	</div>
 </div>
 <div class="col-12 col-lg-4 col-xl-4">
@@ -39,9 +39,9 @@ $this->section('content');
 			<p>Delivery On Process</p>
 		</div>
 		<div class="icon">
-			<i class="ion ion-bag"></i>
+			<i class="fa fa-shipping-fast"></i>
 		</div>
-		<a href="<?php echo (base_url('administrator/Master/verivikasi')) ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+		<a href="<?php echo (base_url('administrator/Deliver/index')) ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 	</div>
 </div>
 <?php $this->endSection(); ?>;

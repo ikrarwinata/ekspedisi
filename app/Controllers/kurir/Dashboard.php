@@ -7,6 +7,9 @@ namespace App\Controllers\kurir;
 **/
 
 use App\Controllers\BaseController;
+use App\Models\Deliver_model;
+use App\Models\Kurir_model;
+use App\Models\Pickup_model;
 
 class Dashboard extends BaseController
 {
@@ -24,7 +27,7 @@ class Dashboard extends BaseController
 
     // This event executed after constructor
     protected function onLoad(){
-        $this->PageData->parent = "kurir/Admin";
+        $this->PageData->parent = "kurir/Dashboard";
         $this->PageData->header = (session()->has("level") ? NULL : ucfirst(str_replace("_", '', session("level"))) . " :: ") . 'Admin';
         $this->PageData->access = ["kurir"];
         
@@ -65,12 +68,80 @@ class Dashboard extends BaseController
     //INDEX
     public function index()
     {
+        $pick = new Pickup_model();
+        $deliv = new Deliver_model();
+        $d = $deliv->select("COUNT(id) AS p")->where("status", 0)->first()->p;
+        $p = $pick->select("COUNT(id) AS p")->where("status", 0)->first()->p;
+        session()->set("k_pick", $p);
+        session()->set("k_deliv", $d);
         $data = [
             'Page' => $this->PageData,
             'Template' => $this->Template
         ];
         return view('kurir/home', $data);
         //endindex
+    }
+
+    //UPDATEfunction
+    public function update()
+    {
+        $id = session('username');
+
+        $this->PageData->header .= ' :: ' . 'Update Profil';
+        $this->PageData->title = "Update Profil Kurir";
+        $this->PageData->subtitle = [
+            'Kurir' => 'kurir/Dashboard/index',
+            'Update Item' => 'kurir/Dashboard/update',
+        ];
+        $this->PageData->url = "kurir/Dashboard/update";
+        $kurir = new Kurir_model();
+        $dataFind = $kurir->getById($id);
+
+        if ($dataFind == FALSE || $id == NULL) {
+            session()->setFlashdata("ci_login_flash_message", 'Terjadi kesalahan. silahkan login ulang !');
+            session()->setFlashdata("ci_login_flash_message_type", "text-danger");
+            throw new \CodeIgniter\Router\Exceptions\RedirectException();
+        }
+        $data = [
+            'data' => (object) [
+                'username' => set_value('username', $dataFind->username),
+                'password' => set_value('password'),
+                'nama' => set_value('nama', $dataFind->nama),
+                'hp' => set_value('hp', $dataFind->hp),
+                'email' => set_value('email', $dataFind->email),
+            ],
+            'action' => site_url($this->PageData->parent . '/updateAction'),
+            'Page' => $this->PageData,
+            'Template' => $this->Template
+        ];
+        return view('kurir/kurir/kurir_form', $data);
+    }
+
+    //ACTIONUPDATEfunction
+    public function updateAction()
+    {
+        $id = $this->request->getPostGet('oldusername');
+        $kurir = new Kurir_model();
+        $dataFind = $kurir->getById($id);
+
+        if ($dataFind == FALSE || $id == NULL) {
+            session()->setFlashdata("ci_login_flash_message", 'Terjadi kesalahan. silahkan login ulang !');
+            session()->setFlashdata("ci_login_flash_message_type", "text-danger");
+            throw new \CodeIgniter\Router\Exceptions\RedirectException();
+        };
+
+        $data = [
+            'username' => $this->request->getPost('username'),
+            'password' => md5($this->request->getPost('password')),
+            'nama' => $this->request->getPost('nama'),
+            'hp' => $this->request->getPost('hp'),
+            'email' => $this->request->getPost('email'),
+        ];
+
+        $kurir->update($id, $data);
+        session()->setFlashdata('ci_flash_message', 'Perubahan berasil disimpan');
+        session()->setFlashdata('ci_flash_message_type', ' alert-success ');
+        return redirect()->back();
     }
     //ENDFUNCTION
 }

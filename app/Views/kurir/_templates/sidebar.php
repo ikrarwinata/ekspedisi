@@ -37,17 +37,34 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="<?php echo (base_url('kurir/Deliver/create')) ?>" class="nav-link">
-						<i class="nav-icon fa fa-shipping-fast"></i>
+					<a href="#" class="nav-link">
+						<i class="nav-icon fas fa-shipping-fast"></i>
 						<p>
 							Delivery
+							<i class="fas fa-angle-left right"></i>
 						</p>
 					</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item">
+							<a href="<?php echo (base_url('kurir/Deliver/index')) ?>" class="nav-link">
+								<i class="fas fa-circle nav-icon"></i>
+								<p>Delivery Barang</p>
+							</a>
+						</li>
+					</ul>
+					<ul class="nav nav-treeview">
+						<li class="nav-item">
+							<a href="<?php echo (base_url('kurir/Deliver/history')) ?>" class="nav-link">
+								<i class="far fa-circle nav-icon"></i>
+								<p>Riwayat Delivery</p>
+							</a>
+						</li>
+					</ul>
 				</li>
 
 				<li class="nav-header"><?php echo (strtoupper(session("level"))) ?></li>
 				<li class="nav-item">
-					<a href="<?php echo (base_url('kurir/Admin/update/' . urlencode(base64_encode(session('username'))))) ?>" class="nav-link">
+					<a href="<?php echo (base_url('kurir/Dashboard/update')) ?>" class="nav-link">
 						<i class="nav-icon fa fa-user"></i>
 						<p>
 							Profil Saya

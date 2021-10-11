@@ -2,17 +2,12 @@
 $this->extend($Template->container);
 $this->section('content');
 ?>
-<div class="">
-    <div class="page-title">
-        <div class="title_left">
-            <h3><?php echo $Page->title; ?></h3>
-        </div>
-    </div>
+<div class="col-12">
     <div class="clearfix"></div>
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 mb-3">
             <?php echo form_open_multipart(base_url($Page->parent . '/fromExcel'), 'class="form-inline"'); ?>
-            <a href="<?php echo base_url($Page->parent . '/create') ?>" class="btn btn-sm btn-primary"><?php echo 'Create New Item' ?></a>&nbsp;
+            <a href="<?php echo base_url($Page->parent . '/create') ?>" class="btn btn-sm btn-primary">Tambah Akun Administrator</a>&nbsp;
             <!--ENDIMPORTEXCELFILE-->
             <!--ENDEXPORTBUTTONS-->
             </form>
@@ -82,14 +77,6 @@ $this->section('content');
                                                     </a>
                                                 </th>
                                                 <th style="transform: rotate(0);">
-                                                    <a href="<?php echo (base_url($Page->parent . '/index?sortcolumn=' . base64_encode('password') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
-                                                        <?php if ($sortcolumn == "password") : ?>
-                                                            <i class="fas fa-sort-alpha-<?php echo ($sortorder == 'DESC' ? 'down' : 'up'); ?>"></i>&nbsp;
-                                                        <?php endif ?>
-                                                        Password
-                                                    </a>
-                                                </th>
-                                                <th style="transform: rotate(0);">
                                                     <a href="<?php echo (base_url($Page->parent . '/index?sortcolumn=' . base64_encode('nama') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
                                                         <?php if ($sortcolumn == "nama") : ?>
                                                             <i class="fas fa-sort-alpha-<?php echo ($sortorder == 'DESC' ? 'down' : 'up'); ?>"></i>&nbsp;
@@ -105,14 +92,6 @@ $this->section('content');
                                                         Hp
                                                     </a>
                                                 </th>
-                                                <th style="transform: rotate(0);">
-                                                    <a href="<?php echo (base_url($Page->parent . '/index?sortcolumn=' . base64_encode('email') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
-                                                        <?php if ($sortcolumn == "email") : ?>
-                                                            <i class="fas fa-sort-alpha-<?php echo ($sortorder == 'DESC' ? 'down' : 'up'); ?>"></i>&nbsp;
-                                                        <?php endif ?>
-                                                        Email
-                                                    </a>
-                                                </th>
                                                 <th width="80px">&nbsp;</th>
                                             </tr>
                                         </thead>
@@ -125,10 +104,8 @@ $this->section('content');
                                                 <td class="text-center"><?php echo $counter++ ?></td>
                                                 <td class="align-middle"><input type="checkbox" class="child-table-checkbox" name="removeme[]" value="<?php echo $value->username ?>" checked="true"></td>
                                                 <td><?php echo ($value->username) ?></td>
-                                                <td><?php echo ($value->password) ?></td>
                                                 <td><?php echo ($value->nama) ?></td>
                                                 <td><?php echo ($value->hp) ?></td>
-                                                <td><?php echo ($value->email) ?></td>
                                                 <td>
                                                     <span class="float-right">
                                                         <div class="dropdown dropleft">

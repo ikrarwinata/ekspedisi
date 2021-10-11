@@ -284,9 +284,12 @@ class Admin extends BaseController
         ];
         
         $this->model->update($id, $data);
+        if (session("username") == $data['username']){
+            session()->set($data);
+        }
         session()->setFlashdata('ci_flash_message', 'Update item success !');
         session()->setFlashdata('ci_flash_message_type', ' alert-success ');
-        return redirect()->to(base_url($this->PageData->parent . '/index'));
+        return redirect()->back(2);
     }
 
     //DELETE
@@ -296,7 +299,11 @@ class Admin extends BaseController
         $row = $this->model->getById($id);
 
         if ($row && $id != NULL) {
-            
+            if ($row->username == session("username")) {
+                session()->setFlashdata('ci_flash_message', 'Anda tidak dapat menghapus akun anda sendiri');
+                session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
+                return redirect()->to(base_url($this->PageData->parent . '/index'));
+            }
             
             $this->model->delete($id);
             session()->setFlashdata('ci_flash_message', 'Delete item success !');

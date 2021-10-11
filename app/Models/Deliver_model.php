@@ -58,8 +58,9 @@ class Deliver_model extends Model
     public function getById(mixed $id) : mixed
     {
         $this
-            ->select("deliver.*, kurir.username, kurir.nama AS nama_kurir")
-            ->join("kurir", "kurir.username=deliver.username_kurir", "LEFT");
+            ->select("deliver.*, kurir.username, kurir.nama AS nama_kurir, master.foto")
+            ->join("kurir", "kurir.username=deliver.username_kurir", "LEFT")
+            ->join("master", "master.resi=deliver.resi");
         return $this->where($this->primaryKey, $id)->sort()->first();
     }
 
@@ -123,8 +124,9 @@ class Deliver_model extends Model
     public function getData(string|null $keyword = null) : object
     {
         $this
-            ->select("deliver.*, kurir.username, kurir.nama AS nama_kurir")
-            ->join("kurir","kurir.username=deliver.username_kurir", "LEFT");
+            ->select("deliver.*, kurir.username, kurir.nama AS nama_kurir, master.foto")
+            ->join("kurir","kurir.username=deliver.username_kurir", "LEFT")
+            ->join("master", "master.resi=deliver.resi");
         if ($keyword == null) {
             return $this->sort();
         };

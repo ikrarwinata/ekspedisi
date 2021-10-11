@@ -7,7 +7,7 @@ $this->section('content');
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 mb-3">
             <?php echo form_open_multipart(base_url($Page->parent . '/fromExcel'), 'class="form-inline"'); ?>
-            <a href="<?php echo base_url($Page->parent . '/create') ?>" class="btn btn-sm btn-primary"><?php echo 'New Delivery' ?></a>&nbsp;
+            <a href="<?php echo base_url($Page->parent . '/create') ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>&nbsp;Add Stock</a>
             <!--ENDIMPORTEXCELFILE-->
             <!--EXPORTBUTTONS-->
             <div class="dropdown">
@@ -82,7 +82,7 @@ $this->section('content');
                                             <tr>
                                                 <th width="60px" class="text-center">#</th>
                                                 <th class="align-middle" width="40px"><input type="checkbox" class="table-parent-checkbox" checked="true"></th>
-                                                <th style="transform: rotate(0);">
+                                                <th colspan="2" style="transform: rotate(0);">
                                                     <a href="<?php echo (base_url($Page->parent . '/index?sortcolumn=' . base64_encode('resi') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
                                                         <?php if ($sortcolumn == "resi") : ?>
                                                             <i class="fas fa-sort-alpha-<?php echo ($sortorder == 'DESC' ? 'down' : 'up'); ?>"></i>&nbsp;
@@ -120,6 +120,11 @@ $this->section('content');
                                             <tr>
                                                 <td class="text-center"><?php echo $counter++ ?></td>
                                                 <td class="align-middle"><input type="checkbox" class="child-table-checkbox" name="removeme[]" value="<?php echo $value->id ?>" checked="true"></td>
+                                                <td class="text-center" width="60px">
+                                                    <?php if (isset($value->foto) && $value->foto != NULL) : ?>
+                                                        <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->foto)) ?>" style="width:60px;height: auto;"></a>
+                                                    <?php endif ?>
+                                                </td>
                                                 <td><a href="<?php echo (base_url('administrator/Master/read/' . urlencode(base64_encode($value->resi)))) ?>"><?php echo ($value->resi) ?></a></td>
                                                 <td><?php echo ($value->nama_kurir) ?></td>
                                                 <td><?php echo (date("d M Y H:i:s", $value->tanggal)) ?></td>
@@ -131,7 +136,7 @@ $this->section('content');
                                                     <?php elseif ($value->status == 1) : ?>
                                                         <span class="badge badge-info">Pending</span>
                                                     <?php elseif ($value->status == 2) : ?>
-                                                        <span class="badge badge-primary">Success</span>
+                                                        <span class="badge badge-success">Success</span>
                                                     <?php endif; ?>
                                                 </td>
                                                 <td>

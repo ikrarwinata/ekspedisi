@@ -1,18 +1,13 @@
 <?php
 $this->extend($Template->container);
 $this->section('content'); ?>
-<div class="">
-    <div class="page-title">
-        <div class="title_left">
-            <h3><?php echo $Page->title; ?></h3>
-        </div>
-    </div>
+<div class="col-12">
     <div class="clearfix"></div>
 
     <?php if (session()->getFlashdata('ci_flash_message') != NULL) : ?>
-    <div class="alert text-center mb-1 mt-0 <?php echo session()->getFlashdata('ci_flash_message_type') ?>" role="alert">
-        <small><?php echo session()->getFlashdata('ci_flash_message') ?></small>
-    </div>
+        <div class="alert text-center mb-1 mt-0 <?php echo session()->getFlashdata('ci_flash_message_type') ?>" role="alert">
+            <small><?php echo session()->getFlashdata('ci_flash_message') ?></small>
+        </div>
     <?php endif; ?>
 
     <div class="row">
@@ -22,23 +17,39 @@ $this->section('content'); ?>
                     <table class="table table-light table-striped">
                         <tbody>
                             <tr>
-                            <th width="15%">id</th><td>: <?php echo ($data->id); ?></td>
-                        </tr>
+                                <th width="15%">ID Delivery</th>
+                                <td>: <?php echo ($data->id); ?></td>
+                            </tr>
                             <tr>
-                            <th width="15%">resi</th><td>: <?php echo ($data->resi); ?></td>
-                        </tr>
+                                <th width="15%">Resi</th>
+                                <td>: <?php echo ($data->resi); ?></td>
+                            </tr>
                             <tr>
-                            <th width="15%">username_kurir</th><td>: <?php echo ($data->username_kurir); ?></td>
-                        </tr>
+                                <th width="15%">Kurir</th>
+                                <td>: <?php echo ($data->nama_kurir . " (" . $data->username_kurir . ")"); ?></td>
+                            </tr>
                             <tr>
-                            <th width="15%">tanggal</th><td>: <?php echo ($data->tanggal); ?></td>
-                        </tr>
+                                <th width="15%">Tanggal Input</th>
+                                <td>: <?php echo (date("d M Y H:i:s", $data->tanggal)); ?></td>
+                            </tr>
                             <tr>
-                            <th width="15%">status</th><td>: <?php echo ($data->status); ?></td>
-                        </tr>
+                                <th width="15%">Status</th>
+                                <td>:
+                                    <?php if ($data->status == -1) : ?>
+                                        Cancel
+                                    <?php elseif ($data->status == 0) : ?>
+                                        On Proses
+                                    <?php elseif ($data->status == 1) : ?>
+                                        Pending
+                                    <?php elseif ($data->status == 2) : ?>
+                                        Success
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
                             <tr>
-                            <th width="15%">keterangan</th><td>: <?php echo ($data->keterangan); ?></td>
-                        </tr>
+                                <th width="15%">keterangan</th>
+                                <td>: <?php echo ($data->keterangan); ?></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

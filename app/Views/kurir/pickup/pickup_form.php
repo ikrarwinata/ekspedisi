@@ -24,13 +24,17 @@ $this->section('content'); ?>
                             <div class="table-responsive-sm table-responsive-md">
                                 <table class="table table-hover">
                                     <tr>
+                                        <th class="text-center" width="45px">#</th>
                                         <th colspan="2">Resi</th>
                                         <th>Harga</th>
                                         <th width="40px"></th>
                                     </tr>
-                                    <?php foreach ($master as $key => $value) : ?>
+                                    <?php
+                                    $i = 0;
+                                    foreach ($master as $key => $value) : ?>
                                         <tr>
-                                            <td class="text-center">
+                                            <td class="text-center"><?php echo (++$i) ?></td>
+                                            <td class="text-center" width="70px">
                                                 <?php if (isset($value->foto) && $value->foto != NULL) : ?>
                                                     <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->foto)) ?>" style="width: 60px;height: auto;"></a>
                                                 <?php endif ?>

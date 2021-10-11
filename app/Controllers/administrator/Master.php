@@ -129,7 +129,7 @@ class Master extends BaseController
         $keyword = $this->request->getGetPost("keyword");
         $s = "status = 0";
         if ($status == 1) {
-            $s = "status > 0";
+            $s = "status = 1";
             $this->PageData->title = "Pickup Selesai";
             $this->PageData->subtitle = [
                 $this->PageData->title => 'administrator/Master/index'

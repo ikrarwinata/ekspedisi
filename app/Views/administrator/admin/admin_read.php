@@ -1,12 +1,7 @@
 <?php
 $this->extend($Template->container);
 $this->section('content'); ?>
-<div class="">
-    <div class="page-title">
-        <div class="title_left">
-            <h3><?php echo $Page->title; ?></h3>
-        </div>
-    </div>
+<div class="col-12">
     <div class="clearfix"></div>
 
     <?php if (session()->getFlashdata('ci_flash_message') != NULL) : ?>
@@ -41,7 +36,7 @@ $this->section('content'); ?>
                 </div>
                 <div class="card-footer">
                     <div class="d-flex p-2 bd-highlight">
-                        <a class="btn btn-sm btn-danger" href="<?php echo base_url($Page->parent . '/index') ?>"><?php echo 'Cancel' ?></a>
+                        <button class="btn btn-sm btn-danger" onclick="window.history.go(-1)"><?php echo 'Cancel' ?></>
                     </div>
                 </div>
             </div>

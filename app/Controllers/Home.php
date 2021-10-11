@@ -110,7 +110,6 @@ class Home extends BaseController
 			$adminM = new Admin_model();
 			$kurir = $kurirM->where(['username' => session("login"), 'password' => md5($password)])->first();
 			$admin = $adminM->where(['username' => session("login"), 'password' => md5($password)])->first();
-			$superadmin = $superadminM->where(['username' => session("login"), 'password' => md5($password)])->first();
 			if ($kurir) {
 				session()->set("loginAttemps", 0);
 				$sessData = [];
@@ -129,15 +128,6 @@ class Home extends BaseController
 				}
 				session()->set($sessData);
 				return redirect()->to("/administrator/Dashboard");
-			} else if ($superadmin) {
-				session()->set("loginAttemps", 0);
-				$sessData = [];
-				$sessData["level"] = "superadministrator";
-				foreach ($superadmin as $key => $value) {
-					$sessData[$key] = $value;
-				};
-				session()->set($sessData);
-				return redirect()->to("/superadministrator/Dashboard");
 			} else {
 				session()->setFlashdata('ci_password_flash_message', "Passowrd yang anda masukan salah");
 				session()->setFlashdata('ci_password_flash_message_type', 'text-danger');
