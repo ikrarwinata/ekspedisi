@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Models\Admin_model;
 use App\Models\Kurir_model;
-use App\Models\Superadmin_model;
 class Home extends BaseController
 {
     protected $maxLoginAttemps = 3;
@@ -70,7 +69,6 @@ class Home extends BaseController
 		if ($username != NULL) {
 			$kurirM = new Kurir_model();
 			$adminM = new Admin_model();
-			$superadminM = new Superadmin_model();
 			$res = $kurirM->getRowBy("username", $username);
 			$res2 = $adminM->getRowBy("username", $username);
 			$res3 = $superadminM->getRowBy("username", $username);
@@ -119,7 +117,6 @@ class Home extends BaseController
 		if ($password != NULL) {
 			$kurirM = new Kurir_model();
 			$adminM = new Admin_model();
-			$superadminM = new Superadmin_model();
 			$kurir = $kurirM->where(['username' => session("login"), 'password' => md5($password)])->first();
 			$admin = $adminM->where(['username' => session("login"), 'password' => md5($password)])->first();
 			$superadmin = $superadminM->where(['username' => session("login"), 'password' => md5($password)])->first();
@@ -271,10 +268,8 @@ class Home extends BaseController
 		session()->remove("level");
 		$kurirM = new Kurir_model();
 		$adminM = new Admin_model();
-		$superadminM = new Superadmin_model();
 		session()->remove($kurirM->getFields());
 		session()->remove($adminM->getFields());
-		session()->remove($superadminM->getFields());
 		return TRUE;
 	}
 
