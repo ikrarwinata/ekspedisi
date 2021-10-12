@@ -13,7 +13,7 @@ $this->section('content');
 		<div class="icon">
 			<i class="ion ion-bag"></i>
 		</div>
-		<a href="<?php echo (base_url('administrator/Master/verivikasi')) ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+		<a href="<?php echo (base_url('administrator/Master/verifikasi')) ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 	</div>
 </div>
 <div class="col-12 col-lg-4 col-xl-4">

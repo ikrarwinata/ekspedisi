@@ -47,7 +47,7 @@
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href="<?php echo (base_url('kurir/Deliver/index')) ?>" class="nav-link">
-								<i class="fas fa-circle nav-icon"></i>
+								<i class="fas fa-circle nav-icon text-sm"></i>
 								<p>Delivery Barang</p>
 							</a>
 						</li>
@@ -55,7 +55,7 @@
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href="<?php echo (base_url('kurir/Deliver/history')) ?>" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
+								<i class="far fa-circle nav-icon text-sm"></i>
 								<p>Riwayat Delivery</p>
 							</a>
 						</li>

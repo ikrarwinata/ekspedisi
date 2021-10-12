@@ -39,24 +39,24 @@
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href="<?php echo (base_url('administrator/Pickup/create')) ?>" class="nav-link">
-								<i class="fas fa-plus nav-icon"></i>
-								<p>Pickup Barang Baru</p>
+								<i class="fas fa-plus nav-icon text-sm"></i>
+								<p class="text-sm">Pickup Barang Baru</p>
 							</a>
 						</li>
 					</ul>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href="<?php echo (base_url('administrator/Pickup/index')) ?>" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Riwayat Pickup</p>
+								<i class="far fa-circle nav-icon text-sm"></i>
+								<p class="text-sm">Riwayat Pickup</p>
 							</a>
 						</li>
 					</ul>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href="<?php echo (base_url('administrator/Master/verifikasi')) ?>" class="nav-link">
-								<i class="fas fa-question-circle nav-icon"></i>
-								<p>
+								<i class="fas fa-question-circle nav-icon text-sm"></i>
+								<p class="text-sm">
 									Butuh Verifikasi
 									<?php if (session()->has("verivikasi") && session("verivikasi") >= 1) : ?>
 										<span class="right badge badge-danger"><?php echo (session("verivikasi")) ?></span>
@@ -68,8 +68,8 @@
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href="<?php echo (base_url('administrator/Master/index')) ?>" class="nav-link">
-								<i class="fas fa-spell-check nav-icon"></i>
-								<p>Terverivikasi</p>
+								<i class="fas fa-spell-check nav-icon text-sm"></i>
+								<p class="text-sm">Terverivikasi</p>
 							</a>
 						</li>
 					</ul>
@@ -85,16 +85,16 @@
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href="<?php echo (base_url('administrator/Deliver/create')) ?>" class="nav-link">
-								<i class="fas fa-plus nav-icon"></i>
-								<p>Delivery Barang</p>
+								<i class="fas fa-plus nav-icon text-sm"></i>
+								<p class="text-sm">Delivery Barang</p>
 							</a>
 						</li>
 					</ul>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href="<?php echo (base_url('administrator/Deliver/index')) ?>" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Riwayat Delivery</p>
+								<i class="far fa-circle nav-icon text-sm"></i>
+								<p class="text-sm">Riwayat Delivery</p>
 							</a>
 						</li>
 					</ul>
@@ -118,16 +118,16 @@
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href="<?php echo (base_url('administrator/Admin/index')) ?>" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Akun Admin</p>
+								<i class="far fa-circle nav-icon text-sm"></i>
+								<p class="text-sm">Akun Admin</p>
 							</a>
 						</li>
 					</ul>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href="<?php echo (base_url('administrator/Kurir/index')) ?>" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Akun Kurir</p>
+								<i class="far fa-circle nav-icon text-sm"></i>
+								<p class="text-sm">Akun Kurir</p>
 							</a>
 						</li>
 					</ul>
