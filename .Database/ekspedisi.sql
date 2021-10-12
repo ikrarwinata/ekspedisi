@@ -23,6 +23,11 @@ CREATE TABLE `deliver` (
   `tanggal` int(11) NOT NULL,
   `status` int(1) NOT NULL DEFAULT 0,
   `keterangan` text DEFAULT NULL,
+  `foto` text DEFAULT NULL,
+  `thumbnail` text DEFAULT NULL,
+  `harga` bigint(15) NOT NULL,
+  `hp` varchar(25) DEFAULT NULL,
+  `valid` int(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -74,4 +79,3 @@ INSERT INTO kurir(username,password,nama,hp,email) VALUES('kurir1','25d55ad283aa
 
 
 INSERT INTO olshop(id,nama,alamat) VALUES('OSP1633952497','Olshop1',X'6a6a6a6a6a6a');
-INSERT INTO pickup(id,id_olshop,jumlah_barang,kurir,status) VALUES('PICK1633984957','OSP1633952497',3,'kurir1',0);
