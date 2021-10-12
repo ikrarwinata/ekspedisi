@@ -227,6 +227,7 @@ class Pickup extends BaseController
             } else {
                 session()->setFlashdata('ci_flash_message_foto', $foto->getErrorString() . ' (' . $foto->getError() . ')');
                 session()->setFlashdata('ci_flash_message_foto_type', ' text-danger ');
+                return $this->update(urlencode(base64_encode($id)));
             };
         };
         $master = new Master_model();

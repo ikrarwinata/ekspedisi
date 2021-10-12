@@ -210,7 +210,7 @@ class Deliver extends BaseController
         $data = [
             'data' => (object) [
                 'id' => set_value('id', generateId("DLVR")),
-                'resi' => set_value('resi'),
+                'resi' => set_value('resi', generateId("RI2")),
             ],
             'listResi' => $master->where("status", 1)->findAll(),
             'disableResi' => FALSE,
@@ -225,17 +225,34 @@ class Deliver extends BaseController
     public function createAction()
     {
         $data = [
-            'id' => generateId("DLVR"),
+            'id' => $this->request->getPost('id'),
             'resi' => $this->request->getPost('resi'),
+            'harga' => $this->request->getPost('harga'),
+            'hp' => $this->request->getPost('hp'),
             'username_kurir' => session("username"),
             'tanggal' => strtotime("now"),
             'status' => 0,
+            'valid' => 0,
             'keterangan' => NULL,
         ];
 
+        if ($foto = $this->request->getFile('foto')) {
+            if ($foto->isValid()) {
+                if (!$foto->hasMoved()) {
+                    $foto->move('uploads/delivery/', $foto->getRandomName());
+                }
+                $n = $foto->getName();
+                $data['foto'] = 'uploads/delivery/' . $n;
+                $data['thumbnail'] = 'uploads/delivery/th' . $n;
+                makeThumbnails('uploads/delivery/', $n);
+            } else {
+                session()->setFlashdata('ci_flash_message_foto', $foto->getErrorString() . ' (' . $foto->getError() . ')');
+                session()->setFlashdata('ci_flash_message_foto_type', ' text-danger ');
+                return $this->create();
+            };
+        };
+
         $this->model->insert($data);
-        $m = new Master_model();
-        $m->update($this->request->getPost('resi'), ['status' => 2]);
         return redirect()->to(base_url($this->PageData->parent . '/index'));
     }
 
@@ -296,6 +313,29 @@ class Deliver extends BaseController
 
         $this->model->update($id, $data);
         return redirect()->to(base_url($this->PageData->parent . '/index'));
+    }
+
+    //DELETE
+    public function delete($id = NULL)
+    {
+        $id = $id == NULL ? $this->request->getPostGet("resi") : base64_decode(urldecode($id));
+        $row = $this->model->getById($id);
+
+        if ($row && $id != NULL) {
+            if (isset($row->foto)) {
+                if ($row->foto != NULL) {
+                    safeUnlink($row->foto);
+                    safeUnlink($row->thumbnail);
+                }
+            }
+
+            $this->model->delete($id);
+            return redirect()->to(base_url($this->PageData->parent . '/index'));
+        } else {
+            session()->setFlashdata('ci_flash_message', 'Sorry... This data is missing !');
+            session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
+            return redirect()->to(base_url($this->PageData->parent . '/index'));
+        }
     }
     
     //ENDFUNCTION

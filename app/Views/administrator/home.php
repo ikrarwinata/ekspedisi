@@ -36,12 +36,12 @@ $this->section('content');
 		<div class="inner">
 			<h3><?php echo (session("d_success")) ?></h3>
 
-			<p>Delivery On Process</p>
+			<p>Verifikasi Delivery Baru</p>
 		</div>
 		<div class="icon">
 			<i class="fa fa-shipping-fast"></i>
 		</div>
-		<a href="<?php echo (base_url('administrator/Deliver/index')) ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+		<a href="<?php echo (base_url('administrator/Deliver/verifikasi')) ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 	</div>
 </div>
 <?php $this->endSection(); ?>;

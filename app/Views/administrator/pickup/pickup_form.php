@@ -17,7 +17,7 @@ $this->section('content'); ?>
                     <form action="<?php echo ($action) ?>" method="post">
                         <div class="form-row">
                             <div class="col-12 mb-3">
-                                <label for="id_olshop" data-toggle="tooltip" title="<?php echo ('Required') ?>">Pilih Nama OlShop&nbsp;<code>*</code></label>
+                                <label for="id_olshop" data-toggle="tooltip" title="<?php echo ('Required') ?>">Pilih Nama OlShop&nbsp;<code>*</code> <a href="<?php echo (base_url('administrator/Olshop/create')) ?>"><small>Atau Tambah Baru</small></a></label>
                                 <select class="form-control select2bs4 <?php echo (session()->getFlashdata('ci_flash_message_id_olshop_type')) ?>" id="id_olshop" name="id_olshop" placeholder="Pilih Nama OlShop">
                                     <?php foreach ($listOlshop as $key => $value) : ?>
                                         <option value="<?php echo ($value->id) ?>" <?php echo (inputSelect($data->id_olshop, $value->id)) ?>><?php echo ($value->nama) ?></option>

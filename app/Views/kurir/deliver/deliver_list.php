@@ -92,30 +92,41 @@ $this->section('content');
                                     </tbody>
                                     <?php
                                     $counter = $start;
+                                    $img = NULL;
                                     foreach ($data as $value) :
                                     ?>
                                         <tr>
                                             <td class="text-center"><?php echo $counter++ ?></td>
                                             <td class="text-center" width="60px">
-                                                <?php if (isset($value->foto) && $value->foto != NULL) : ?>
+                                                <?php if (isset($value->foto) && $value->foto != NULL) :
+                                                    $img = base_url($value->foto);
+                                                ?>
                                                     <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->thumbnail)) ?>" style="width:60px;height: auto;"></a>
                                                 <?php endif ?>
                                             </td>
-                                            <td><a href="<?php echo (base_url('kurir/Deliver/read/' . urlencode(base64_encode($value->resi)))) ?>"><?php echo ($value->resi) ?></a></td>
+                                            <td><a href="<?php echo ($img) ?>"><?php echo ($value->resi) ?></a></td>
                                             <td><?php echo (date("d M Y H:i:s", $value->tanggal)) ?></td>
                                             <td class="text-center">
-                                                <?php if ($value->status == -1) : ?>
-                                                    <span class="badge badge-danger">Cancel</span>
-                                                <?php elseif ($value->status == 0) : ?>
-                                                    <span class="badge badge-primary">On Proses</span>
-                                                <?php elseif ($value->status == 1) : ?>
-                                                    <span class="badge badge-info">Pending</span>
-                                                <?php elseif ($value->status == 2) : ?>
-                                                    <span class="badge badge-success">Success</span>
+                                                <?php if ($value->valid == 0) : ?>
+                                                    <span class="badge badge-warning">Menunggu Verivikasi Admin</span>
+                                                <?php else : ?>
+                                                    <?php if ($value->status == -1) : ?>
+                                                        <span class="badge badge-danger">Cancel</span>
+                                                    <?php elseif ($value->status == 0) : ?>
+                                                        <span class="badge badge-primary">On Proses</span>
+                                                    <?php elseif ($value->status == 1) : ?>
+                                                        <span class="badge badge-info">Pending</span>
+                                                    <?php elseif ($value->status == 2) : ?>
+                                                        <span class="badge badge-success">Success</span>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                             </td>
                                             <td>
-                                                <?php if ($value->status != 2) : ?>
+                                                <?php if ($value->valid == 0) : ?>
+                                                    <a class="btn btn-sm btn-danger" href="<?php echo base_url($Page->parent . '/delete/' . urlencode(base64_encode($value->id))) ?>" title="<?php echo ('Hapus Item Ini') ?>" onclick="return confirm('Anda yakin ingin menghapus item ini ?')">
+                                                        <i class="fa fa-trash fa-lg"></i>
+                                                    </a>
+                                                <?php elseif ($value->status != 2) : ?>
                                                     <a class="btn btn-sm btn-primary" href="<?php echo base_url($Page->parent . '/update/' . urlencode(base64_encode($value->id))) ?>" title="<?php echo ('Process On Delivery') ?>">
                                                         <i class="fa fa-truck-loading fa-lg"></i>
                                                     </a>

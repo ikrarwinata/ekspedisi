@@ -84,9 +84,14 @@
 					</a>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
-							<a href="<?php echo (base_url('administrator/Deliver/create')) ?>" class="nav-link">
-								<i class="fas fa-plus nav-icon text-sm"></i>
-								<p class="text-sm">Delivery Barang</p>
+							<a href="<?php echo (base_url('administrator/Deliver/verifikasi')) ?>" class="nav-link">
+								<i class="fas fa-bell nav-icon text-sm"></i>
+								<p class="text-sm">
+									Verivikasi Delivery
+									<?php if (session()->has("d_success") && session("d_success") >= 1) : ?>
+										<span class="right badge badge-danger"><?php echo (session("d_success")) ?></span>
+									<?php endif; ?>
+								</p>
 							</a>
 						</li>
 					</ul>

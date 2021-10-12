@@ -16,7 +16,7 @@ class Deliver_model extends Model
     //To help protect against Mass Assignment Attacks, the Model class requires 
     //that you list all of the field names that can be changed during inserts and updates
     // https://codeigniter4.github.io/userguide/models/model.html#protecting-fields
-    protected $allowedFields = ['id', 'resi', 'username_kurir', 'tanggal', 'status', 'keterangan'];
+    protected $allowedFields = ['id', 'resi', 'username_kurir', 'tanggal', 'status', 'keterangan', 'foto', 'thumbnail', 'harga', 'hp', 'valid'];
 
     protected $useAutoIncrement = false;
 
@@ -58,9 +58,8 @@ class Deliver_model extends Model
     public function getById(mixed $id) : mixed
     {
         $this
-            ->select("deliver.*, kurir.username, kurir.nama AS nama_kurir, master.foto, master.thumbnail")
-            ->join("kurir", "kurir.username=deliver.username_kurir", "LEFT")
-            ->join("master", "master.resi=deliver.resi");
+            ->select("deliver.*, kurir.username, kurir.nama AS nama_kurir")
+            ->join("kurir", "kurir.username=deliver.username_kurir", "LEFT");
         return $this->where($this->primaryKey, $id)->sort()->first();
     }
 
@@ -124,9 +123,8 @@ class Deliver_model extends Model
     public function getData(string|null $keyword = null) : object
     {
         $this
-            ->select("deliver.*, kurir.username, kurir.nama AS nama_kurir, master.foto, master.thumbnail")
-            ->join("kurir","kurir.username=deliver.username_kurir", "LEFT")
-            ->join("master", "master.resi=deliver.resi");
+            ->select("deliver.*, kurir.username, kurir.nama AS nama_kurir")
+            ->join("kurir","kurir.username=deliver.username_kurir", "LEFT");
         if ($keyword == null) {
             return $this->sort();
         };

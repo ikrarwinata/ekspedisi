@@ -7,7 +7,6 @@ $this->section('content');
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 mb-3">
             <?php echo form_open_multipart(base_url($Page->parent . '/fromExcel'), 'class="form-inline"'); ?>
-            <a href="<?php echo base_url($Page->parent . '/create') ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>&nbsp;Add Stock</a>
             <!--ENDIMPORTEXCELFILE-->
             <!--EXPORTBUTTONS-->
             <div class="dropdown">
@@ -101,6 +100,7 @@ $this->section('content');
                                                         Tanggal
                                                     </a>
                                                 </th>
+                                                <th>Harga</th>
                                                 <th class="text-center" style="transform: rotate(0);">
                                                     <a href="<?php echo (base_url($Page->parent . '/index?sortcolumn=' . base64_encode('status') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
                                                         <?php if ($sortcolumn == "status") : ?>
@@ -115,7 +115,9 @@ $this->section('content');
                                         </tbody>
                                         <?php
                                         $counter = $start;
+                                        $total = 0;
                                         foreach ($data as $value) :
+                                            $total += $value->harga;
                                         ?>
                                             <tr>
                                                 <td class="text-center"><?php echo $counter++ ?></td>
@@ -125,9 +127,10 @@ $this->section('content');
                                                         <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->thumbnail)) ?>" style="width:60px;height: auto;"></a>
                                                     <?php endif ?>
                                                 </td>
-                                                <td><a href="<?php echo (base_url('administrator/Master/read/' . urlencode(base64_encode($value->resi)))) ?>"><?php echo ($value->resi) ?></a></td>
+                                                <td><?php echo ($value->resi) ?></td>
                                                 <td><?php echo ($value->nama_kurir) ?></td>
                                                 <td><?php echo (date("d M Y H:i:s", $value->tanggal)) ?></td>
+                                                <td>Rp. <?php echo (formatNumber($value->harga)) ?></td>
                                                 <td class="text-center">
                                                     <?php if ($value->status == -1) : ?>
                                                         <span class="badge badge-danger">Cancel</span>
@@ -150,16 +153,20 @@ $this->section('content');
                                                                     <i class="fa fa-eye fa-lg"></i>&nbsp;
                                                                     <?php echo ('Show') ?>
                                                                 </a>
-                                                                <?php if ($value->status != 2) : ?>
+                                                                <?php if ($value->valid == 0) : ?>
+                                                                    <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/set_valid/' . urlencode(base64_encode($value->id))) ?>" title="<?php echo ('Verifikasi item ini') ?>">
+                                                                        <i class="fa fa-check fa-lg"></i>&nbsp;
+                                                                        <?php echo ('Verifikasi') ?>
+                                                                    </a>
                                                                     <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/update/' . urlencode(base64_encode($value->id))) ?>" title="<?php echo ('Update this item') ?>">
                                                                         <i class="fa fa-edit fa-lg"></i>&nbsp;
                                                                         <?php echo ('Update') ?>
                                                                     </a>
+                                                                    <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/delete/' . urlencode(base64_encode($value->id))) ?>" onclick="javascript: return confirm('<?php echo ('Are you sure want to delete this item ?') ?>')" title="<?php echo ('Delete this item') ?>">
+                                                                        <i class="fa fa-trash fa-lg"></i>&nbsp;
+                                                                        <?php echo ('Delete this items') ?>
+                                                                    </a>
                                                                 <?php endif; ?>
-                                                                <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/delete/' . urlencode(base64_encode($value->id))) ?>" onclick="javascript: return confirm('<?php echo ('Are you sure want to delete this item ?') ?>')" title="<?php echo ('Delete this item') ?>">
-                                                                    <i class="fa fa-trash fa-lg"></i>&nbsp;
-                                                                    <?php echo ('Delete this items') ?>
-                                                                </a>
                                                             </div>
                                                         </div>
                                                     </span>
@@ -167,6 +174,12 @@ $this->section('content');
                                             </tr>
                                         <?php endforeach; ?>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="6" class="text-center">Total</th>
+                                                <th>Rp. <?php echo (formatNumber($total)) ?></th>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>

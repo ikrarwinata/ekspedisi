@@ -70,9 +70,9 @@ class Dashboard extends BaseController
     {
         $master = new Master_model();
         $deliver = new Deliver_model();
-        $c = $master->select("COUNT(resi) AS c")->where("status", 0)->first()->c;
+        $c = $master->select("COUNT(resi) AS c")->join("pickup", "master.id_pickup=pickup.id", "LEFT")->where("master.status", 0)->where("pickup.status = 1", NULL, FALSE)->first()->c;
         $dc = $deliver->select("COUNT(resi) AS c")->where("status", -1)->first()->c;
-        $ds = $deliver->select("COUNT(resi) AS c")->where("status", 2)->first()->c;
+        $ds = $deliver->select("COUNT(resi) AS c")->where("valid", 0)->first()->c;
         session()->set("verivikasi", $c);
         session()->set("d_cancel", $dc);
         session()->set("d_success", $ds);

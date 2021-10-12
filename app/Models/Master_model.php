@@ -126,7 +126,8 @@ class Master_model extends Model
         $this
             ->select("master.*, olshop.nama AS nama_olshop, kurir.username, kurir.nama AS nama_kurir")
             ->join("kurir","kurir.username=master.kurir", "LEFT")
-            ->join("olshop","master.id_olshop=olshop.id", "LEFT");
+            ->join("olshop","master.id_olshop=olshop.id", "LEFT")
+            ->join("pickup", "master.id_pickup=pickup.id", "LEFT");
         if ($keyword == null) {
             return $this->sort();
         };

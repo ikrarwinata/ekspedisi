@@ -69,7 +69,7 @@ class Master extends BaseController
     public function index($status = 1)
     {
         //indexstart
-        $c = $this->model->select("COUNT(resi) AS c")->where("status", 0)->first()->c;
+        $c = $this->model->select("COUNT(resi) AS c")->join("pickup", "master.id_pickup=pickup.id", "LEFT")->where("master.status", 0)->where("pickup.status = 1", NULL, FALSE)->first()->c;
         session()->set("verivikasi", $c);
         
         // Table sorting using GET var
@@ -129,14 +129,14 @@ class Master extends BaseController
         $keyword = $this->request->getGetPost("keyword");
         $s = "master.status = 0";
         if ($status == 1) {
-            $s = "master.status = 1";
+            $s = "master.status = 1 AND pickup.status = 1";
             $this->PageData->title = "Pickup Selesai";
             $this->PageData->subtitle = [
                 $this->PageData->title => 'administrator/Master/index'
             ];
             $this->PageData->url = "administrator/Master/index";
         }else {
-            $s = "master.status = 0";
+            $s = "master.status = 0 AND pickup.status = 1";
             $this->PageData->title = "Verivikasi Pickup";
             $this->PageData->subtitle = [
                 $this->PageData->title => 'administrator/Master/verivikasi'
@@ -196,6 +196,57 @@ class Master extends BaseController
             'Template' => $this->Template
         ];
         return view('administrator/master/master_read', $data);
+    }
+
+    //READfunction
+    public function update($id = NULL)
+    {
+        $id = $id == NULL ? $this->request->getPostGet("resi") : base64_decode(urldecode($id));
+
+        $this->PageData->header .= ' :: Ubah Harga';
+        $this->PageData->title = "Ubah Harga";
+        $this->PageData->subtitle = [
+            'Pickup' => 'administrator/Master/index',
+            'Ubah Harga' => 'administrator/Master/update/' . urlencode(base64_encode($id)),
+        ];
+        $this->PageData->url = "administrator/Master/update/" . urlencode(base64_encode($id));
+
+        $dataFind = $this->model->getById($id);
+
+        if ($dataFind == FALSE || $id == NULL) {
+            session()->setFlashdata('ci_flash_message', 'Sorry... This data is missing !');
+            session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
+            return redirect()->to(base_url($this->PageData->parent . '/index'));
+        }
+        $data = [
+            'data' => $this->model->getById($id), //getById on data
+            'action' => site_url($this->PageData->parent . '/updateAction'),
+            'Page' => $this->PageData,
+            'Template' => $this->Template
+        ];
+        return view('administrator/master/master_form', $data);
+    }
+
+    //ACTIONUPDATEfunction
+    public function updateAction()
+    {
+        $id = $this->request->getPostGet('oldresi');
+        $dataFind = $this->model->getById($id);
+
+        if ($dataFind == FALSE || $id == NULL) {
+            session()->setFlashdata('ci_flash_message', 'Sorry... This data is missing !');
+            session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
+            return redirect()->to(base_url($this->PageData->parent . '/index'));
+        };
+
+        $data = [
+            'harga' => $this->request->getPost('harga')
+        ];
+
+        $this->model->update($id, $data);
+        session()->setFlashdata('ci_flash_message', 'Update item success !');
+        session()->setFlashdata('ci_flash_message_type', ' alert-success ');
+        return redirect()->back();
     }
 
     //DELETE

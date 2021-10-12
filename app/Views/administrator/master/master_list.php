@@ -109,7 +109,9 @@ $this->section('content');
                                         </tbody>
                                         <?php
                                         $counter = $start;
+                                        $total = 0;
                                         foreach ($data as $value) :
+                                            $total += $value->harga;
                                         ?>
                                             <tr>
                                                 <td class="text-center"><?php echo $counter++ ?></td>
@@ -131,14 +133,13 @@ $this->section('content');
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="<?php echo ('actionMenuButton' . $counter) ?>">
                                                                 <?php if ($value->status == 0) : ?>
-                                                                    <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/set_valid/' . urlencode(base64_encode($value->resi))) ?>" onclick="return confirm('Anda yakin verivikasi item ini?')" title="<?php echo ('Valid') ?>">
+                                                                    <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/set_valid/' . urlencode(base64_encode($value->resi))) ?>" onclick="return confirm('Anda yakin verifikasi item ini?')" title="<?php echo ('Valid') ?>">
                                                                         <i class="fa fa-check fa-lg"></i>&nbsp;
-                                                                        Verivikasi
+                                                                        Verifikasi
                                                                     </a>
-                                                                <?php else : ?>
-                                                                    <a class="dropdown-item" href="<?php echo base_url('administrator/Deliver/create/' . urlencode(base64_encode($value->resi))) ?>" title="<?php echo ('Valid') ?>">
-                                                                        <i class="fa fa-shipping-fast fa-lg"></i>&nbsp;
-                                                                        Delivery
+                                                                    <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/update/' . urlencode(base64_encode($value->resi))) ?>" title="<?php echo ('Ubah Harga') ?>">
+                                                                        <i class="fa fa-edit fa-lg"></i>&nbsp;
+                                                                        Ubah Harga
                                                                     </a>
                                                                 <?php endif; ?>
                                                                 <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/delete/' . urlencode(base64_encode($value->resi))) ?>" onclick="return confirm('Anda yakin hapus item ini ? Data Delivery yang bersangkutan juga akan dihapus')" title="<?php echo ('Hapus') ?>">
@@ -152,6 +153,12 @@ $this->section('content');
                                             </tr>
                                         <?php endforeach; ?>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="6" class="text-center">Total</th>
+                                                <th>Rp. <?php echo (formatNumber($total)) ?></th>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>

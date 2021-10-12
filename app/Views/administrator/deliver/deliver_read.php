@@ -55,7 +55,7 @@ $this->section('content'); ?>
                 </div>
                 <div class="card-footer">
                     <div class="d-flex p-2 bd-highlight">
-                        <a class="btn btn-sm btn-danger" href="<?php echo base_url($Page->parent . '/index') ?>"><?php echo 'Cancel' ?></a>
+                        <a class="btn btn-sm btn-danger" href="<?php echo base_url($Page->parent . '/verifikasi') ?>"><?php echo 'Cancel' ?></a>
                     </div>
                 </div>
             </div>

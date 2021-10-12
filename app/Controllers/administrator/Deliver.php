@@ -65,11 +65,30 @@ class Deliver extends BaseController
         return $allowed;
     }
 
+    //DELETE
+    public function set_valid($id = NULL)
+    {
+        $id = $id == NULL ? $this->request->getPostGet("resi") : base64_decode(urldecode($id));
+        $row = $this->model->getById($id);
+
+        if ($row && $id != NULL) {
+
+            $this->model->update($id, ["valid" => 1]);
+            return redirect()->back();
+        } else {
+            session()->setFlashdata('ci_flash_message', 'Sorry... This data is missing !');
+            session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
+            return redirect()->back();
+        }
+    }
+
     //INDEX
-    public function index()
+    public function index($isDone = TRUE)
     {
         //indexstart
-        
+
+        $ds = $this->model->select("COUNT(resi) AS c")->where("valid", 0)->first()->c;
+        session()->set("d_success", $ds);
         // Table sorting using GET var
         $sortcolumn = $this->request->getGetPost("sortcolumn");
         $sortorder = $this->request->getGetPost("sortorder");
@@ -125,13 +144,27 @@ class Deliver extends BaseController
         $page = $this->request->getGet("page");
         $page = $page<=0?1:$page;
         $keyword = $this->request->getGetPost("keyword");
-        $totalrecord = $this->model->getData($keyword)->countAllResults();        
 
-        $this->PageData->title = "Delivery Barang";
-        $this->PageData->subtitle = [
-            $this->PageData->title => 'administrator/Deliver/index'
-        ];
-        $this->PageData->url = "administrator/Deliver/index";
+        if ($isDone) {
+            $this->PageData->title = "Riwayat Delivery Barang";
+            $this->PageData->subtitle = [
+                $this->PageData->title => 'administrator/Deliver/index'
+            ];
+            $this->PageData->url = "administrator/Deliver/index";
+            $this->model->where("valid", 1);
+            $totalrecord = $this->model->getData($keyword)->countAllResults();
+            $this->model->where("valid", 1);
+        } else {
+            $this->PageData->title = "Verifikasi Delivery";
+            $this->PageData->subtitle = [
+                $this->PageData->title => 'administrator/Deliver/verifikasi'
+            ];
+            $this->PageData->url = "administrator/Deliver/verifikasi";
+            $this->model->where("valid", 0);
+            $totalrecord = $this->model->getData($keyword)->countAllResults();
+            $this->model->where("valid", 0);
+        }
+        
 
         $data = [
             'sortcolumn' => $sortcolumn,
@@ -149,6 +182,11 @@ class Deliver extends BaseController
         ];
         return view('administrator/deliver/deliver_list', $data);
         //endindex
+    }
+
+    public function verifikasi()
+    {
+        return $this->index(FALSE);
     }
 
     //READfunction
@@ -261,7 +299,8 @@ class Deliver extends BaseController
             'data' => (object) [
                 'id' => set_value('id', $dataFind->id),
                 'resi' => set_value('resi', $dataFind->resi),
-                'username_kurir' => set_value('username_kurir', $dataFind->username_kurir),
+                'hp' => set_value('hp', $dataFind->hp),
+                'harga' => set_value('harga', $dataFind->harga),
             ],
             'listResi' => $master->where("status", 1)->orWhere("resi", $dataFind->resi)->findAll(),
             'listKurir' => $kurir->findAll(),
@@ -285,19 +324,15 @@ class Deliver extends BaseController
             return redirect()->to(base_url($this->PageData->parent . '/index'));
         };
 
-        if ($this->isRequestValid() == FALSE) {
-            return $this->update(urlencode(base64_encode($id)));
-        };
-
         $data = [
-            'username_kurir' => $this->request->getPost('username_kurir'),
-            'tanggal' => strtotime("now"),
+            'harga' => $this->request->getPost('harga'),
+            'hp' => $this->request->getPost('hp'),
         ];
 
         $this->model->update($id, $data);
         session()->setFlashdata('ci_flash_message', 'Update item success !');
         session()->setFlashdata('ci_flash_message_type', ' alert-success ');
-        return redirect()->to(base_url($this->PageData->parent . '/index'));
+        return redirect()->to(base_url($this->PageData->parent . '/verifikasi'));
     }
 
     //DELETE

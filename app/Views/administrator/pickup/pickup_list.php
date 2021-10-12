@@ -7,7 +7,7 @@ $this->section('content');
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 mb-3">
             <?php echo form_open_multipart(base_url($Page->parent . '/fromExcel'), 'class="form-inline"'); ?>
-            <a href="<?php echo base_url($Page->parent . '/create') ?>" class="btn btn-sm btn-primary"><?php echo 'Create New Item' ?></a>&nbsp;
+            <a href="<?php echo base_url($Page->parent . '/create') ?>" class="btn btn-sm btn-primary"><?php echo 'Pickup Baru' ?></a>&nbsp;
             <!--ENDIMPORTEXCELFILE-->
             <!--ENDEXPORTBUTTONS-->
             </form>

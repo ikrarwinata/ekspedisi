@@ -25,33 +25,46 @@ $this->section('content'); ?>
                         <div class="col-12">
                             <div class="table-responsive-sm table-responsive-md">
                                 <table class="table table-hover">
-                                    <tr>
-                                        <th class="text-center" width="45px">#</th>
-                                        <th colspan="2">Resi</th>
-                                        <th>Harga</th>
-                                        <th width="40px"></th>
-                                    </tr>
-                                    <?php
-                                    $i = 0;
-                                    foreach ($master as $key => $value) : ?>
+                                    <thead>
                                         <tr>
-                                            <td class="text-center"><?php echo (++$i) ?></td>
-                                            <td class="text-center" width="70px">
-                                                <?php if (isset($value->foto) && $value->foto != NULL) : ?>
-                                                    <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->thumbnail)) ?>" style="width: 60px;height: auto;"></a>
-                                                <?php endif ?>
-                                            </td>
-                                            <td>
-                                                <?php echo ($value->resi) ?>
-                                            </td>
-                                            <td>Rp. <?php echo (formatNumber($value->harga)) ?></td>
-                                            <td>
-                                                <a class="btn btn-sm btn-danger" href="<?php echo base_url($Page->parent . '/remove/' . urlencode(base64_encode($value->resi))) ?>" title="Hapus">
-                                                    <i class="fa fa-trash fa-lg"></i>
-                                                </a>
-                                            </td>
+                                            <th class="text-center" width="45px">#</th>
+                                            <th colspan="2">Resi</th>
+                                            <th>Harga</th>
+                                            <th width="40px"></th>
                                         </tr>
-                                    <?php endforeach; ?>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $i = 0;
+                                        $total = 0;
+                                        foreach ($master as $key => $value) :
+                                            $total += $value->harga;
+                                        ?>
+                                            <tr>
+                                                <td class="text-center"><?php echo (++$i) ?></td>
+                                                <td class="text-center" width="70px">
+                                                    <?php if (isset($value->foto) && $value->foto != NULL) : ?>
+                                                        <a href="<?php echo (base_url($value->foto)) ?>"><img src="<?php echo (base_url($value->thumbnail)) ?>" style="width: 60px;height: auto;"></a>
+                                                    <?php endif ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo ($value->resi) ?>
+                                                </td>
+                                                <td>Rp. <?php echo (formatNumber($value->harga)) ?></td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-danger" href="<?php echo base_url($Page->parent . '/remove/' . urlencode(base64_encode($value->resi))) ?>" title="Hapus">
+                                                        <i class="fa fa-trash fa-lg"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="3" class="text-center">Total</th>
+                                            <th>Rp. <?php echo (formatNumber($total)) ?></th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
