@@ -130,12 +130,13 @@ class Deliver extends BaseController
         $this->PageData->subtitle = [
             $this->PageData->title => 'kurir/Deliver/index'
         ];
-        $this->PageData->url = "kurir/Deliver/index";
         if ($isDone) {
+            $this->PageData->url = "kurir/Deliver/history";
             $this->model->where('username_kurir', session('username'))->where("deliver.status <> 0", NULL, FALSE);
             $totalrecord = $this->model->getData($keyword)->countAllResults();
             $this->model->where('username_kurir', session('username'))->where("deliver.status <> 0", NULL, FALSE);
         }else {
+            $this->PageData->url = "kurir/Deliver/index";
             $this->model->where('username_kurir', session('username'))->where("deliver.status = 0", NULL, FALSE);
             $totalrecord = $this->model->getData($keyword)->countAllResults();
             $this->model->where('username_kurir', session('username'))->where("deliver.status = 0", NULL, FALSE);

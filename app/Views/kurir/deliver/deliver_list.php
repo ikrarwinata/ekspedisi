@@ -63,7 +63,7 @@ $this->section('content');
                                         <tr>
                                             <th width="60px" class="text-center">#</th>
                                             <th colspan="2" style="transform: rotate(0);">
-                                                <a href="<?php echo (base_url($Page->parent . '/index?sortcolumn=' . base64_encode('resi') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
+                                                <a href="<?php echo (base_url($Page->url . '?sortcolumn=' . base64_encode('resi') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
                                                     <?php if ($sortcolumn == "resi") : ?>
                                                         <i class="fas fa-sort-alpha-<?php echo ($sortorder == 'DESC' ? 'down' : 'up'); ?>"></i>&nbsp;
                                                     <?php endif ?>
@@ -71,15 +71,31 @@ $this->section('content');
                                                 </a>
                                             </th>
                                             <th style="transform: rotate(0);">
-                                                <a href="<?php echo (base_url($Page->parent . '/index?sortcolumn=' . base64_encode('tanggal') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
+                                                <a href="<?php echo (base_url($Page->url . '?sortcolumn=' . base64_encode('tanggal') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
                                                     <?php if ($sortcolumn == "tanggal") : ?>
                                                         <i class="fas fa-sort-alpha-<?php echo ($sortorder == 'DESC' ? 'down' : 'up'); ?>"></i>&nbsp;
                                                     <?php endif ?>
                                                     Tanggal
                                                 </a>
                                             </th>
+                                            <th style="transform: rotate(0);">
+                                                <a href="<?php echo (base_url($Page->url . '?sortcolumn=' . base64_encode('harga') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
+                                                    <?php if ($sortcolumn == "harga") : ?>
+                                                        <i class="fas fa-sort-alpha-<?php echo ($sortorder == 'DESC' ? 'down' : 'up'); ?>"></i>&nbsp;
+                                                    <?php endif ?>
+                                                    Harga
+                                                </a>
+                                            </th>
+                                            <th style="transform: rotate(0);">
+                                                <a href="<?php echo (base_url($Page->url . '?sortcolumn=' . base64_encode('hp') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
+                                                    <?php if ($sortcolumn == "hp") : ?>
+                                                        <i class="fas fa-sort-alpha-<?php echo ($sortorder == 'DESC' ? 'down' : 'up'); ?>"></i>&nbsp;
+                                                    <?php endif ?>
+                                                    Telepon
+                                                </a>
+                                            </th>
                                             <th class="text-center" style="transform: rotate(0);">
-                                                <a href="<?php echo (base_url($Page->parent . '/index?sortcolumn=' . base64_encode('status') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
+                                                <a href="<?php echo (base_url($Page->url . '?sortcolumn=' . base64_encode('status') . '&sortorder=' . ($sortorder == 'ASC' ? 'DESC' : 'ASC'))); ?>" class="stringetched-link text-decoration-none" style="text-decoration: none;color: #243245;">
                                                     <?php if ($sortcolumn == "status") : ?>
                                                         <i class="fas fa-sort-alpha-<?php echo ($sortorder == 'DESC' ? 'down' : 'up'); ?>"></i>&nbsp;
                                                     <?php endif ?>
@@ -106,6 +122,8 @@ $this->section('content');
                                             </td>
                                             <td><a href="<?php echo ($img) ?>"><?php echo ($value->resi) ?></a></td>
                                             <td><?php echo (date("d M Y H:i:s", $value->tanggal)) ?></td>
+                                            <td>Rp. <?php echo (formatNumber($value->harga)) ?></td>
+                                            <td><?php echo ($value->hp) ?></td>
                                             <td class="text-center">
                                                 <?php if ($value->valid == 0) : ?>
                                                     <span class="badge badge-warning">Menunggu Verivikasi Admin</span>
