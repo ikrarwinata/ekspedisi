@@ -132,13 +132,13 @@ class Deliver extends BaseController
         ];
         $this->PageData->url = "kurir/Deliver/index";
         if ($isDone) {
-            $this->model->where('username_kurir', session('username'))->where("deliver.status = 2", NULL, FALSE);
+            $this->model->where('username_kurir', session('username'))->where("deliver.status <> 0", NULL, FALSE);
             $totalrecord = $this->model->getData($keyword)->countAllResults();
-            $this->model->where('username_kurir', session('username'))->where("deliver.status = 2", NULL, FALSE);
+            $this->model->where('username_kurir', session('username'))->where("deliver.status <> 0", NULL, FALSE);
         }else {
-            $this->model->where('username_kurir', session('username'))->where("deliver.status < 2", NULL, FALSE);
+            $this->model->where('username_kurir', session('username'))->where("deliver.status = 0", NULL, FALSE);
             $totalrecord = $this->model->getData($keyword)->countAllResults();
-            $this->model->where('username_kurir', session('username'))->where("deliver.status < 2", NULL, FALSE);
+            $this->model->where('username_kurir', session('username'))->where("deliver.status = 0", NULL, FALSE);
         }
         // $this->model->where('username_kurir', session('username'));
         // $totalrecord = $this->model->getData($keyword)->countAllResults();

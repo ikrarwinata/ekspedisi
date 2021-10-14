@@ -19,7 +19,7 @@
 
 		<!-- Sidebar Menu -->
 		<nav class="mt-2">
-			<ul class="nav nav-pills nav-sidebar flex-column text-sm nav-flat nav-legacy nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+			<ul class="nav nav-pills nav-sidebar flex-column nav-flat nav-legacy nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
 				<li class="nav-item">
 					<a href="<?php echo (base_url('kurir/Dashboard')) ?>" class="nav-link">
 						<i class="nav-icon fas fa-home"></i>
@@ -47,7 +47,7 @@
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href="<?php echo (base_url('kurir/Deliver/index')) ?>" class="nav-link">
-								<i class="fas fa-circle nav-icon text-sm"></i>
+								<i class="fas fa-circle nav-icon text-xs"></i>
 								<p>Delivery Barang</p>
 							</a>
 						</li>
@@ -55,7 +55,7 @@
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href="<?php echo (base_url('kurir/Deliver/history')) ?>" class="nav-link">
-								<i class="far fa-circle nav-icon text-sm"></i>
+								<i class="far fa-circle nav-icon text-xs"></i>
 								<p>Riwayat Delivery</p>
 							</a>
 						</li>

@@ -22,7 +22,7 @@ CI_ENVIRONMENT = production
 #--------------------------------------------------------------------
 
 # app.baseURL = 'https://mdlkurirbatam.com'
-app.baseURL = 'http://localhost/ekspedisi/public'
+app.baseURL = 'https://mdlkurirbatam.com/public'
 # app.forceGlobalSecureRequests = false
 
 # app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
@@ -54,9 +54,9 @@ app.baseURL = 'http://localhost/ekspedisi/public'
 #--------------------------------------------------------------------
 
 database.default.hostname = "localhost"
-database.default.database = "ekspedisi"
-database.default.username = "root"
-database.default.password = ""
+database.default.database = "mdlw1464_kurir"
+database.default.username = "mdlw1464_user"
+database.default.password = "IgBW0(FYly,b"
 database.default.port = "3306"
 database.default.DBDriver = MySQLi
 

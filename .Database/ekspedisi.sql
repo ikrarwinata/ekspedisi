@@ -74,8 +74,10 @@ CREATE TABLE `pickup` (
 
 INSERT INTO admin(username,password,nama,hp,email) VALUES('admin','21232f297a57a5a743894a0e4a801fc3','admin','admin','admin');
 
+INSERT INTO deliver(id,resi,username_kurir,tanggal,status,keterangan,foto,thumbnail,harga,hp,valid) VALUES('DLVR1634193397','RI21634193397','kurir1',1634193414,-1,X'736461',X'75706c6f6164732f64656c69766572792f313633343139333431345f37656133636438326662356632666138616234342e706e67',X'75706c6f6164732f64656c69766572792f7468313633343139333431345f37656133636438326662356632666138616234342e706e67',200000,'33333333333',1);
 
 INSERT INTO kurir(username,password,nama,hp,email) VALUES('kurir1','25d55ad283aa400af464c76d713c07ad','kurir1','kurir1','kurir1');
 
 
 INSERT INTO olshop(id,nama,alamat) VALUES('OSP1633952497','Olshop1',X'6a6a6a6a6a6a');
+INSERT INTO pickup(id,id_olshop,jumlah_barang,kurir,status) VALUES('PICK1634193380','OSP1633952497',1,'kurir1',0);
