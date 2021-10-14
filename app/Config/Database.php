@@ -33,9 +33,9 @@ class Database extends Config
     public $default = [
         'DSN'      => '',
         'hostname' => 'localhost',
-        'username' => 'root',
-        'password' => '',
-        'database' => 'ekspedisi',
+        'username' => 'mdlw1464_user',
+        'password' => 'IgBW0(FYly,b',
+        'database' => 'mdlw1464_kurir',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
@@ -50,7 +50,7 @@ class Database extends Config
         'port'     => 3306,
     ];
 
-    /**
+    /** 
      * This database connection is used when
      * running PHPUnit database tests.
      *
