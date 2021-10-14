@@ -45,11 +45,28 @@ $this->section('content'); ?>
                                 </div>
                             </div>
                         </div>
+                        <?php if (isset($data->status) && isset($data->valid) && $data->valid == 1) : ?>
+                            <div class="form-row">
+                                <div class="col-12 mb-3">
+                                    <label for="status" data-toggle="tooltip" title="<?php echo ('Required') ?>">Status&nbsp;<code>*</code></label>
+                                    <select name="status" id="status" class="form-control">
+                                        <option value="-1" <?php echo (inputSelect($data->status, "-1")) ?>>Cancel</option>
+                                        <option value="0" <?php echo (inputSelect($data->status, "0")) ?>>On Process</option>
+                                        <option value="1" <?php echo (inputSelect($data->status, "1")) ?>>Pending</option>
+                                        <option value="2" <?php echo (inputSelect($data->status, "2")) ?>>Success</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        <?php echo (session()->getFlashdata('ci_flash_message_status')) ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
 
                         <input type="hidden" id="oldid" class="form-control" name="oldid" style="display:none;" value="<?php echo $data->id ?>">
+                        <input type="hidden" id="referrer" class="form-control" name="referrer" style="display:none;" value="<?php echo $Page->subtitle['Delivery'] ?>">
                         <div class="d-flex p-2 bd-highlight">
                             <div class="form-group">
-                                <a class="btn btn-sm btn-danger" href="<?php echo (base_url($Page->parent . "/verifikasi")) ?>">Cancel</a>
+                                <a class="btn btn-sm btn-danger" href="<?php echo (base_url($Page->subtitle['Delivery'])) ?>">Cancel</a>
                                 <button class="btn btn-sm btn-primary" type="submit"><?php echo 'Save' ?></button>
                             </div>
                         </div>

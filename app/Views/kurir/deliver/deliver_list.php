@@ -126,7 +126,7 @@ $this->section('content');
                                                     <a class="btn btn-sm btn-danger" href="<?php echo base_url($Page->parent . '/delete/' . urlencode(base64_encode($value->id))) ?>" title="<?php echo ('Hapus Item Ini') ?>" onclick="return confirm('Anda yakin ingin menghapus item ini ?')">
                                                         <i class="fa fa-trash fa-lg"></i>
                                                     </a>
-                                                <?php elseif ($value->status != 2) : ?>
+                                                <?php elseif ($value->status == 0) : ?>
                                                     <a class="btn btn-sm btn-primary" href="<?php echo base_url($Page->parent . '/update/' . urlencode(base64_encode($value->id))) ?>" title="<?php echo ('Process On Delivery') ?>">
                                                         <i class="fa fa-truck-loading fa-lg"></i>
                                                     </a>

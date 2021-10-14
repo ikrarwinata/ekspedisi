@@ -153,14 +153,14 @@ $this->section('content');
                                                                     <i class="fa fa-eye fa-lg"></i>&nbsp;
                                                                     <?php echo ('Show') ?>
                                                                 </a>
+                                                                <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/update/' . urlencode(base64_encode($value->id))) ?>" title="<?php echo ('Update this item') ?>">
+                                                                    <i class="fa fa-edit fa-lg"></i>&nbsp;
+                                                                    <?php echo ('Update') ?>
+                                                                </a>
                                                                 <?php if ($value->valid == 0) : ?>
                                                                     <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/set_valid/' . urlencode(base64_encode($value->id))) ?>" title="<?php echo ('Verifikasi item ini') ?>">
                                                                         <i class="fa fa-check fa-lg"></i>&nbsp;
                                                                         <?php echo ('Verifikasi') ?>
-                                                                    </a>
-                                                                    <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/update/' . urlencode(base64_encode($value->id))) ?>" title="<?php echo ('Update this item') ?>">
-                                                                        <i class="fa fa-edit fa-lg"></i>&nbsp;
-                                                                        <?php echo ('Update') ?>
                                                                     </a>
                                                                     <a class="dropdown-item" href="<?php echo base_url($Page->parent . '/delete/' . urlencode(base64_encode($value->id))) ?>" onclick="javascript: return confirm('<?php echo ('Are you sure want to delete this item ?') ?>')" title="<?php echo ('Delete this item') ?>">
                                                                         <i class="fa fa-trash fa-lg"></i>&nbsp;

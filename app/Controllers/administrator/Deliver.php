@@ -223,9 +223,16 @@ class Deliver extends BaseController
         if ($resi != NULL) $resi = base64_decode(urldecode($resi));
         $this->PageData->header .= ' :: ' . 'Delivery Barang';
         $this->PageData->title = "Add Stock Delivery Kurir";
+        $agent = $this->request->getUserAgent();
+        $before = NULL;
+        if ($agent->isReferral()) {
+            $before = $agent->referrer();
+        } else {
+            $before = 'administrator/Deliver/index';
+        }
         $this->PageData->subtitle = [
-            'Delivery' => 'administrator/Deliver/index',
-            'Create New Item' => 'administrator/Deliver/create',
+            'Delivery' => $before,
+            'Update Delivery Item' => 'administrator/Deliver/update' . urlencode(base64_encode($id)),
         ];
         $this->PageData->url = "administrator/Deliver/create";
         $master = new Master_model();
@@ -270,7 +277,7 @@ class Deliver extends BaseController
         $m->update($this->request->getPost('resi'), ['status' => 2]);
         session()->setFlashdata('ci_flash_message', 'Create item success !');
         session()->setFlashdata('ci_flash_message_type', ' alert-success ');
-        return redirect()->to(base_url($this->PageData->parent . '/index'));
+        return redirect()->to(base_url($this->request->getPost('referrer')));
     }
 
     //UPDATEfunction
@@ -280,8 +287,15 @@ class Deliver extends BaseController
 
         $this->PageData->header .= ' :: ' . 'Update Item';
         $this->PageData->title = "Update Delivery Barang";
+        $agent = $this->request->getUserAgent();
+        $before = NULL;
+        if ($agent->isReferral()) {
+            $before = $agent->referrer();
+        }else{
+            $before = 'administrator/Deliver/index';
+        }
         $this->PageData->subtitle = [
-            'Delivery' => 'administrator/Deliver/index',
+            'Delivery' => $before,
             'Update Delivery Item' => 'administrator/Deliver/update' . urlencode(base64_encode($id)),
         ];
         $this->PageData->url = "administrator/Deliver/update" . urlencode(base64_encode($id));
@@ -291,7 +305,7 @@ class Deliver extends BaseController
         if ($dataFind == FALSE || $id == NULL) {
             session()->setFlashdata('ci_flash_message', 'Sorry... This data is missing !');
             session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
-            return redirect()->to(base_url($this->PageData->parent . '/index'));
+            return redirect()->to(base_url($before));
         }
         $master = new Master_model();
         $kurir = new Kurir_model();
@@ -301,6 +315,8 @@ class Deliver extends BaseController
                 'resi' => set_value('resi', $dataFind->resi),
                 'hp' => set_value('hp', $dataFind->hp),
                 'harga' => set_value('harga', $dataFind->harga),
+                'status' => set_value('status', $dataFind->status),
+                'valid' => set_value('status', $dataFind->valid)
             ],
             'listResi' => $master->where("status", 1)->orWhere("resi", $dataFind->resi)->findAll(),
             'listKurir' => $kurir->findAll(),
@@ -321,18 +337,25 @@ class Deliver extends BaseController
         if ($dataFind == FALSE || $id == NULL) {
             session()->setFlashdata('ci_flash_message', 'Sorry... This data is missing !');
             session()->setFlashdata('ci_flash_message_type', ' alert-danger ');
-            return redirect()->to(base_url($this->PageData->parent . '/index'));
+            $before = NULL;
+            if ($agent->isReferral()) {
+                $before = $agent->referrer();
+            } else {
+                $before = 'administrator/Deliver/index';
+            }
+            return redirect()->to(base_url($before));
         };
 
         $data = [
             'harga' => $this->request->getPost('harga'),
             'hp' => $this->request->getPost('hp'),
+            'status' => $this->request->getPost('status')
         ];
 
         $this->model->update($id, $data);
         session()->setFlashdata('ci_flash_message', 'Update item success !');
         session()->setFlashdata('ci_flash_message_type', ' alert-success ');
-        return redirect()->to(base_url($this->PageData->parent . '/verifikasi'));
+        return redirect()->to(base_url($this->request->getPost('referrer')));
     }
 
     //DELETE
